@@ -1,0 +1,182 @@
+
+\documentclass[12pt,letterpaper,twoside]{article}
+
+\input{../latex-report-001/preamble}
+
+% Datos de la asignatura
+\institution{utfsm}
+\classcode{INF356}
+\classname{Computación Distribuida para Big Data}
+\classsemester{2025-1}
+\classparallel{200}
+
+% Datos de la entrega
+\doctitle{Trabajo Práctico 1}
+\version{v1.0}
+
+% Estudiante
+\astudentname{Wedge}
+\astudentlastname{Antilles}
+\astudentrol{123456789-0}
+\astudentemail{wedge.antilles@rebelalliance.com}
+  
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Borrar o comentar esta sección instrucciones antes de entregar %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{\color{red}
+\section*{Instrucciones}
+  
+Este informe corresponde a la plantilla para presentar el reporte de la actividad práctica inicial que debe ser proveído como entregable de la actividad.
+
+Para compilar este informe se requiere del preambulo disponible en \url{https://github.com/ptoledo-teaching/latex-report-001}. Usted debe clonar este repositorio y colocarlo al mismo nivel que la carpeta \textbf{practico-001}.
+
+Todos los textos en rojo a lo largo de la plantilla, junto con esta página de instrucciones, deben ser eliminadas antes de la compilación final.
+
+La evaluación se realizará en base a 3 entregas incrementales con las siguientes fechas:
+
+\begin{itemize}
+    \item \textbf{Entrega 1 - 2025/04/21}: Se debe entregar la sección 1 de este informe
+    \item \textbf{Entrega 2 - 2025/04/28}: Se debe entregar la sección 2 y 3 de este informe. La evaluación corresponderá en un 80\% a la sección 2 y 3 con un 20\% a la sección 1.
+    \item \textbf{Entrega 3 - 2025/05/05}: Se debe entregar la sección 4. La sección 4 corresponderá a un 80\% de la nota de la entrega y un 20\% a las secciones 1, 2 y 3
+\end{itemize}
+
+Los 20\% otorgados a entregas anteriores en las entregas 2 y 3 están pensados para que una mejora de lo entregado anteriormente sea considerado en la calificación final. Recuerde que la nota final del trabajo práctico corresponde al \textbf{promedio geométrico} de las entregas 1, 2 y 3.
+\newpage
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Despligue del cluster}
+
+\subsection{Implementación del tutorial}
+
+{\color{red} En esta sección debe explicar como desarrolló el tutorial proveído para implementar un cluster compuesto de una máquina maestra y 4 trabajadores. Debe indicar todos los comandos o scripts no incluidos en el tutorial que haya utilizado para desarrollar esta actividad. Se provee un ejemplo de como incorporar código escrito en bash (puede incluir varios fragmentos independientes, no es necesario que estén todos en el mismo bloque de código).}
+
+{\color{red} Todos los snippets de código que sean proveidos deben ser adjuntados al archivo zip de la entrega respetando la numeración que tengan en el informe.}
+
+{\color{red} Las imágenes deben ser referenciadas como ``Figura \ref{fig:001}'', al igual que los snippets de código como ``Código \ref{lst:001}''}
+
+\begin{code}[H]
+\lstinputlisting[style=bashstyle, caption={Código utilizado en la implementación del tutorial}, label={lst:001}]{code/code-000.sh}
+\end{code}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figure-000}
+    \caption{Captura de pantalla de la ``AWS Management Console - EC2'' que muestra las máquinas del cluster creado con el tutorial
+    {\color{red} Se debe ver la consola completa. En las columnas seleccione: Name, Instance ID, Instance state, Instance type, Status check, Public IPv4 address, Private IP Address}}
+    \label{fig:001}
+\end{figure}
+
+\subsection{Expansión del cluster}
+
+{\color{red} Desarrolle un procedimiento para expandir el tamaño del cluster de 4 a 8 trabajadores. Las máquinas de la ampliación también deben ser de tipo \textbf{t2.micro}. Considere que una ampliación de la cantidad de máquinas puede conllevar cambios en algunos de los parámetros de configuración establecidos en los archivos \textbf{.xml}. Si es así, indique que parámetros fueron modificados y la razón de la siguueinte forma:
+\begin{itemize}
+    \item \textbf{aasdf.qwer.zxcv}: Valor cambia de x a y debido a el aumento de la capacidad
+    \item \textbf{aasdf.qwer.zxcv}: Valor cambia de x a y debido a el aumento de la capacidad
+\end{itemize}
+}
+
+{\color{red} En esta sección indique el procedimiento desarrollado y agregue cualquier código que haya sido utilizado en caso que este sea diferente o complementario al código utilizado en la subsección anterior. Se provee un ejemplo de como incorporar código escrito en bash (puede incluir varios fragmentos independientes, no es necesario que estén todos en el mismo bloque de código).}
+
+\begin{code}[H]
+\lstinputlisting[style=bashstyle, caption={Código utilizado en la expansión del cluster}, label={lst:002}]{code/code-000.sh}
+\end{code}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figure-000}
+    \caption{Captura de pantalla de la ``AWS Management Console - EC2'' que muestra las máquinas del cluster expandido
+    {\color{red} Se debe ver la consola completa. En las columnas seleccione: Name, Instance ID, Instance state, Instance type, Status check, Public IPv4 address, Private IP Address}}
+    \label{fig:002}
+\end{figure}
+
+\subsection{Cliente web}
+
+La figura \ref{fig:003} muestra la consola web de Hadoop y la figura \ref{fig:004} la consola web del HDFS.
+
+{\color{red} En esta sección explique el contenido que se está mostrando en cada una de las figuras referenciadas.}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figure-000}
+    \caption{Captura de pantalla del cliente web de Hadoop
+    {\color{red} Mostrar la consola web de Hadoop en la sección de aplicaciones terminadas, en las que se debe ver a lo menos los trabajos de la validación del cluster original y los trabajos que haya usado para validar el funcionamiento de la expansión del cluster}}
+    \label{fig:003}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figure-000}
+    \caption{Captura de pantalla del cliente web de HDFS
+    {\color{red} Mostrar la consola web de HDFS mostrando alguno de los archivos que hayan sido agregados al dfs.}}
+    \label{fig:004}
+\end{figure}
+
+\section{Instalación de Apache Hive}
+
+\subsection{Procedimiento}
+
+{\color{red} Desarrolle un procedimiento para instalar \textbf{Apache Hive} en su cluster. Utilice la versión 4.0.1. Tenga en consideración:
+\begin{itemize}
+    \item Las máquinas t2.micro son muy limitadas para levantar el servicio de Hive. Para esta sección se sugiere subir la máquina maestra a tipo \textbf{t3.medium} y los trabajadores a \textbf{t3.small}. Para cambiar el tipo de máquina no es necesario volver a desplegarla, basta con detener la máquina, cambiar su tipo desde la consola, y volver a iniciarla.
+    \item Lograr la configuración correcta para Hive es un procedimiento que requiere bastante conocimiento y pruebas. El archivo zip de las instrucciones incluye el archivo \textbf{hive-example.xml} con la configuración a utilizar.
+\end{itemize}}
+
+{\color{red} En esta sección indique el procedimiento desarrollado y agregue cualquier código que haya sido utilizado para instalar y probar Apache Hive. Incluya el documento de configuración utilizado y explique cada uno de los parámetros definidos en este.}
+
+\subsection{Prueba}
+
+{\color{red} Para probar que la instalación de Hive funciona correctamente, puede utilizar el procedimiento disponible en el fragmento de código \ref{lst:004}. Este ejemplo asume que el archivo utilizado para probar el cluster \textbf{sw-script-e04.txt} se encuentra disponible en el DFS. El resultado esperado para la prueba indicada se entrega en el fragmento \ref{lst:005}}
+
+\begin{code}[H]
+\lstinputlisting[style=plainstyle, caption={Ejemplo de uso de Apache Hive}, label={lst:004}]{code/code-004.hql}
+\end{code}
+
+\begin{code}[H]
+\lstinputlisting[style=plainstyle, caption={Resultado esperado para ejemplo de uso de Apache Hive {\color{red} Algunos de los valores han sido alterados, deben ser corregidos con el resultado de su procedimiento.}}, label={lst:005}]{code/code-005.txt}
+\end{code}
+
+\section{Exploración del HDFS}
+
+{\color{red} Desarrolle y explique un script que utilizando bash permita obtener la lista de bloques en las que está guardado un archivo en el DFS, incluyendo las direcciones IP privadas de las máquinas que guardan cada copia del bloque. La salida del script se debe ver como lo indicado en el fragmento \ref{lst:006}.}
+
+\begin{code}[H]
+\lstinputlisting[style=plainstyle, caption={Ejemplo de uso de Apache Hive}, label={lst:006}]{code/code-006.txt}
+\end{code}
+
+{\color{red} Muestre el script desarrollado en el Código \ref{lst:007} y explique cada una de las partes del script.}
+
+\begin{code}[H]
+    \lstinputlisting[style=bashstyle, caption={Script de reporte de DFS}, label={lst:007}]{code/code-000.sh}
+    \end{code}
+
+{\color{red} En esta sección indique el procedimiento desarrollado y agregue cualquier código que haya sido utilizado para desarrollar el script.}
+{\color{red} Utilizando la AWS-CLI, descargue en el nodo maestro del cluster el archivo \url{s3://utfsm-inf356-dataset/vlt_observations_000.csv}}\footnote{Este archivo es público y está guardado en un bucket S3, por lo que debe utilizar la opcion \textbf{--no-sign-request}. Este archivo pesa 371.1[MB] y es un archivo \textbf{csv} como el mismo formato al descargar \url{https://archive.eso.org/eso/eso_archive_main.html} con todos los campos. Una vez descargado, coloque el archivo en la carpeta \textbf{data} del DFS y muestre el resultado del script desarrollado previamente.}
+
+\section{Uso del cluster}
+
+\subsection{Importación}
+
+{\color{red} Desarrolle un procedimiento que permita importar el archivo \textbf{vlt\_observations\_000.csv} a Hive desde el DFS respetando las columnas del archivo. Indique el código utilizado.}
+
+\subsection{Parsing}
+
+{\color{red} Desarrolle una propuesta para asignar un tipo apropiado a los datos importados y desarrolle un procedimiento que permita dar este formato creando una nueva tabla. Indique el código utilizado.}
+
+\subsection{Análisis}
+
+{\color{red} Piense 3 métricas sobre los datos interpretados, describa cada una de estas métricas y provea el código para obtener el resultado. Las métricas deben tener como mínimo 2 elementos de análisis (agrupamiento, contar, promedio, etc.). Ejemplos de métricas posibles son:
+\begin{itemize}
+  \item Cantidad de observaciones por cada tipo de observación (agrupa y cuenta)
+  \item Ángulo promedio de declination de las observaciones del set para cada instrumento (agrupa y promedia)
+  \item Seeing promedio por hora de observación (agrupa y promedia)
+\end{itemize}
+Provea un análisis sobre el desempeño del cluster al realizar estas operaciones. Incluya mediciones como tiempo de cómputo, máquinas usadas, cantidad de trabajos, cantidad de mappers y reducers, etc.}
+
+\end{document}
