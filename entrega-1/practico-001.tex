@@ -1,5 +1,5 @@
 
-\documentclass[12pt,letterpaper,twoside]{article}
+\documentclass[9pt,letterpaper,twoside]{article}
 
 \input{../latex-report-001/preamble}
 
@@ -26,26 +26,7 @@
 % Borrar o comentar esta sección instrucciones antes de entregar %%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-{\color{red}
-\section*{Instrucciones}
-  
-Este informe corresponde a la plantilla para presentar el reporte de la actividad práctica inicial que debe ser proveído como entregable de la actividad.
-
-Para compilar este informe se requiere del preambulo disponible en \url{https://github.com/ptoledo-teaching/latex-report-001}. Usted debe clonar este repositorio y colocarlo al mismo nivel que la carpeta \textbf{practico-001}.
-
-Todos los textos en rojo a lo largo de la plantilla, junto con esta página de instrucciones, deben ser eliminadas antes de la compilación final.
-
-La evaluación se realizará en base a 3 entregas incrementales con las siguientes fechas:
-
-\begin{itemize}
-    \item \textbf{Entrega 1 - 2025/04/21}: Se debe entregar la sección 1 de este informe
-    \item \textbf{Entrega 2 - 2025/04/28}: Se debe entregar la sección 2 y 3 de este informe. La evaluación corresponderá en un 80\% a la sección 2 y 3 con un 20\% a la sección 1.
-    \item \textbf{Entrega 3 - 2025/05/05}: Se debe entregar la sección 4. La sección 4 corresponderá a un 80\% de la nota de la entrega y un 20\% a las secciones 1, 2 y 3
-\end{itemize}
-
-Los 20\% otorgados a entregas anteriores en las entregas 2 y 3 están pensados para que una mejora de lo entregado anteriormente sea considerado en la calificación final. Recuerde que la nota final del trabajo práctico corresponde al \textbf{promedio geométrico} de las entregas 1, 2 y 3.
 \newpage
-}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -55,12 +36,7 @@ Los 20\% otorgados a entregas anteriores en las entregas 2 y 3 están pensados p
 
 \subsection{Implementación del tutorial}
 
-{\color{red} En esta sección debe explicar como desarrolló el tutorial proveído para implementar un cluster compuesto de una máquina maestra y 4 trabajadores. Debe indicar todos los comandos o scripts no incluidos en el tutorial que haya utilizado para desarrollar esta actividad. Se provee un ejemplo de como incorporar código escrito en bash (puede incluir varios fragmentos independientes, no es necesario que estén todos en el mismo bloque de código).}
-
-{\color{red} Todos los snippets de código que sean proveidos deben ser adjuntados al archivo zip de la entrega respetando la numeración que tengan en el informe.}
-
-{\color{red} Las imágenes deben ser referenciadas como ``Figura \ref{fig:001}'', al igual que los snippets de código como ``Código \ref{lst:001}''}
-
+\noindent
 Para la creacion del Cluster en Amazon Web Services, fue necesario seguir los pasos indicados en el tutorial
 entregado en el Slide T01 - Hadoop Cluster - v1.0 entregado en Aula. El instructivo constaba de los siguientes
 pasos:
@@ -74,70 +50,242 @@ pasos:
 \end{itemize}
 
 \subsubsection*{Crear la cuenta de AWS}
+
+\noindent
 Para la creacion de la cuenta de AWS simplemente segui las indicaciones en el correo de invitacion indicado por el profesor.
 Posterior a eso, me fui directamente a la seccion de Modules, en donde estaba el Modulo de Launch AWS Academy Learner Lab,
 que sirve para entrar a la Console Home de AWS.
 
 \subsubsection*{Preparar en entorno del Cluster}
 
+\noindent
 Una vez en Console Home, creamos una instancia de tipo EC2, para la cual creamos los Key Pairs, el Security Group y la instancia
 Master.
 
+\noindent
 Para los Key Pairs, creamos una llave de tipo RSA con formato de archivo PEM.
 
+\noindent
 Para el Security Group, creamos tres reglas, 
 una Inbound Rule de tipo SSH con tipo de fuente Anywhere-IPv4
-(para entrar por SSH),
-una Inbound Rule de tipo Custom TCP con rango de puerto 8088 tipo de fuente Anywhere-IPv4
-(para la consola web de Hadoop),
-una Inbound Rule de tipo Custom TCP con rango de puerto 9870 tipo de fuente Anywhere-IPv4
-(para la consola web de HDFS)
-y finalmente, una Inbound Rule de tipo Custom TCP con rango de puerto de 0 a 65535 tipo de 
+para entrar por SSH,
+una Inbound Rule de tipo Custom TCP con rango de puerto 8088 y tipo de fuente Anywhere-IPv4
+para la consola web de Hadoop,
+una Inbound Rule de tipo Custom TCP con rango de puerto 9870 y tipo de fuente Anywhere-IPv4
+para la consola web de HDFS
+y finalmente, una Inbound Rule de tipo Custom TCP con rango de puerto de 0 a 65535 y tipo de 
 fuente Anywhere-IPv4.
 
+\noindent
 Para la instancia Master creamos un nodo con Ubuntu 24.04 de tipo t2.micro y con 16gb de almacenamiento.
 Esta instancia usara la Key y Security Group recien creados (al igual que las instancias Worker mas adelante). 
-Una vez configurados los parametros, lanzamos la instancia y nos conectamos por SSH.
+Una vez configurados los parametros, lanzamos la instancia y nos conectamos por SSH:
+
+\begin{code}[H]
+    \lstinputlisting[style=bashstyle, caption={Conectarse por primera vez al Master usando la llave PEM con la IP publica}, label={code/ssh_into_master.sh}]{code/ssh_into_master.sh}
+\end{code}
 
 \subsubsection*{Configurar la maquina Master}
 
+\noindent
 El primer paso es logicamente actualizar los paquetes del sistema, para esto es necesario ejecutar el siguiente
 comando:
 
-Una vez hecho esto, instalamos el paquete correspondiente a Java / OpenJDK 11.
+\begin{code}[H]
+    \lstinputlisting[style=bashstyle, caption={Actualizar repositorios locales y descargar actualizaciones}, label={code/update.sh}]{code/update.sh}
+\end{code}
 
+\noindent
+Una vez hecho esto, instalamos el paquete correspondiente a Java / OpenJDK 11:
+
+\begin{code}[H]
+    \lstinputlisting[style=bashstyle, caption={Descargar Java / OpenJDK 11 usando APT}, label={code/install_java.sh}]{code/install_java.sh}
+\end{code}
+
+\noindent
 Una vez que hayamos resuelto todos los paquetes necesarios, tenemos que crear una llave publica con el siguiente
 comando:
 
-Esta llave publica la guardaremos en la carpeta de Authorized Keys para SSH, lo cual permitira al Master
-conectarnos a si mismo por LocalHost.
+\begin{code}[H]
+    \lstinputlisting[style=bashstyle, caption={Crear una llave publica en formato RSA y autorizarla}, label={code/create_pub_key.sh}]{code/create_pub_key.sh}
+\end{code}
 
-\subsubsection*{Configurar todos los Workers}
-\subsubsection*{Inicializar el Cluster}
-\subsubsection*{Ejecutar el script de Map Reduce con Hadoop}
+\noindent
+Esta llave publica la guardaremos en la carpeta de Authorized Keys para SSH, lo cual permitira al Master
+conectarse a si mismo por LocalHost.
+
+\noindent
+Descargamos Hadoop 3.3.6 desde la pagina oficial usando el comando WGET, el cual hace una request a la pagina para descargar el archivo comprimido en formato
+TAR GZ, el cual tendremos que descomprimir y modificar para indicarle parametros especiales. Ejecutamos entonces los siguientes comandos:
 
 \begin{code}[H]
-\lstinputlisting[style=bashstyle, caption={Código utilizado en la implementación del tutorial}, label={lst:001}]{code/code-000.sh}
+    \lstinputlisting[style=bashstyle, caption={Descargar y descomprimir Hadoop en el Master}, label={code/download_hadoop.sh}]{code/download_hadoop.sh}
+\end{code}
+
+\noindent
+Esto creara una carpeta llamada hadoop-3.3.6 en el directorio Home del Master, esta carpeta albergara los binarios yu scripts ejecutables para desplegar nuestro Distributed File System (DFS).
+Para poder ejecutar los comandos en dicha carpeta de manera directa, modificaremos las Variables de Entorno de la maquina Master, de esta manera podremos ejecutar los comandos en cualquier
+directorio. Dichas Variables tambien contienen rutas para la ejecucion de OpenJDK y la ubicacion de nuestra carpeta Hadoop, las cuales debemos obedecer para que funcione correctamente nuestro
+cluster. Las variables de entorno en Linux se guardan en el directorio /etc/environment y solo puede modificarse por el Super Usuario (Root). Personalmente, a mi me gusta usar Vim, pero para
+aquellas personas con gustos inferiores existen alternativas:
+
+\begin{code}[H]
+    \lstinputlisting[style=bashstyle, caption={Editar las Variables de Entorno usando el usuario Root y el editor de texto Vim}, label={code/edit_env_vars.sh}]{code/edit_env_vars.sh}
+\end{code}
+
+\noindent
+Las Variables debiesen quedar asi:
+
+\begin{code}[H]
+    \lstinputlisting[style=bashstyle, caption={Variables de Entorno que usaremos para el cluster}, label={code/env_vars.sh}]{code/env_vars.sh}
+\end{code}
+
+\newpage
+
+\noindent
+Lo ultimo es modificar los archivos de configuracion de Hadoop en base a lo indicado por el profesor. Estos archivos luego seran enviados a los Workers cuando comprimamos la carpeta hadoop-3.3.6.
+
+\begin{code}[H]
+    \lstinputlisting[style=bashstyle, caption={hadoop-3.3.6/etc/hadoop/core-site.xml}, label={code/core-site.xml}]{code/core-site.xml}
+\end{code}
+
+\begin{code}[H]
+    \lstinputlisting[style=bashstyle, caption={hadoop-3.3.6/etc/hadoop/hdfs-site.xml}, label={code/hdfs-site.xml}]{code/hdfs-site.xml}
+\end{code}
+
+\newpage
+
+\begin{code}[H]
+    \lstinputlisting[style=bashstyle, caption={hadoop-3.3.6/etc/hadoop/mapred-site.xml}, label={code/mapred-site.xml}]{code/mapred-site.xml}
+\end{code}
+
+\begin{code}[H]
+    \lstinputlisting[style=bashstyle, caption={hadoop-3.3.6/etc/hadoop/yarn-site.xml}, label={code/yarn-site.xml}]{code/yarn-site.xml}
+\end{code}
+
+\newpage
+
+\subsubsection*{Configurar todos los Workers}
+
+\noindent
+Los Workers tambien seran maquinas con Ubuntu 24.04 y de tipo t2.micro, usaran las mismas Key Pairs y el mismo Security Group.
+Lo unico que cambiara entre ellos y el Master sera el almacenamiento, las cuales constaran solo de 8gb en total.
+Una vez creados los Workers desde el interfaz de EC2 de AWS, tendremos que obtener sus IP's publicas y privadas. La primera
+para conectarnos por primera vez, la segunda para establecer una conexion permanente.
+Anotamos las IP's privadas de la siguiente manera:
+
+\begin{code}[H]
+    \lstinputlisting[style=bashstyle, caption={IP's privadas de los Workers en la carpeta Home del Master}, label={code/worker_priv_ip.sh}]{code/worker_priv_ip.sh}
+\end{code}
+
+\noindent
+Luego de tener esto, borramos el archivo comprimido de Hadoop que descargamos inicialmente y comprimimos el directorio que modificamos en el paso anterior para
+luego enviarselo a los Workers. Estos luego descomprimiran el archivo de manera local para asi no abusar de nuestro ancho de banda limitado:
+
+\begin{code}[H]
+    \lstinputlisting[style=bashstyle, caption={Borrar el archivo hadoop-3.3.6.tar.gz y comprimimos el directorio hadoop-3.3.6}, label={code/arch_hadoop.sh}]{code/arch_hadoop.sh}
+\end{code}
+
+\noindent
+Y como la tarea de configurar cada Worker manualmente es tedioso, usamos un script de Bash que realiza el trabajo por nosotros. El cual itera los siguientes pasos:
+
+\noindent
+Para cada una de las instancias Worker proceder de la siguiente forma:
+
+\begin{enumerate}
+\item Instalar la llave pública de la máquina Master en el Worker
+\item Crear una llave para el Worker
+\item Instalar la llave del Worker en el Master
+\item Instalar la llave del Worker en el Worker
+\item Actualizar el sistema operativo en el Worker
+\item Instalar Java en el Worker (openjdk-11-jdk)
+\item Editar el archivo /etc/environment de la misma forma que para Master
+\item Reiniciar el worker
+\item Transferir el archivo de despliegue de Hadoop de la máquina Master al Worker
+\item Expandir el archivo de despliegue en la máquina Worker
+\end{enumerate}
+
+\noindent
+El script utilizado quedo de la siguiente formula:
+
+\begin{code}[H]
+    \lstinputlisting[style=bashstyle, caption={Script para configurar todos los Workers desde el Master}, label={code/install1.sh}]{code/install1.sh}
+\end{code}
+
+\newpage
+
+\begin{code}[H]
+    \lstinputlisting[style=bashstyle, caption={Script para configurar todos los Workers desde el Master}, label={code/install2.sh}]{code/install2.sh}
+\end{code}
+
+Una vez configurado todo, reiniciamos el nodo Master y reingresamos cuando la maquina vuelva a estar activa.
+
+\newpage
+
+\subsubsection*{Inicializar el Cluster}
+
+\noindent
+Si las maquinas estan correctamente configuradas, podremos levantar el File System distribuido sin problemas.
+Para esto es necesario formatear el disco e iniciar los servicios para la distribucion de este y para la gestion
+de recursos entre los Workers. Cabe notar que por disco me refiero a unidad de almacenamiento, como vimos en
+clases, un DFS no almacena datos de forma continua, si no que la reparte entre varios Nodos.
+
+\noindent
+Dicho esto, ejecutamos la siguiente serie de comandos:
+
+\begin{code}[H]
+    \lstinputlisting[style=bashstyle, caption={Formateamos el File System, lo iniciamos y llamamos al negociador de recursos YARN}, label={code/init_cluster.sh}]{code/init_cluster.sh}
+\end{code}
+
+\noindent
+Luego, para corroborar de que todo esta en orden, ejecutamos el siguiente comando:
+
+\begin{code}[H]
+    \lstinputlisting[style=bashstyle, caption={Corroborar estado de nuestro HDFS}, label={code/hdfs-blocks1.sh}]{code/hdfs-blocks1.sh}
+\end{code}
+
+\noindent
+La salida debiese ser algo del siguiente estilo:
+
+\begin{code}[H]
+    \lstinputlisting[style=bashstyle, caption={Estado del HDFS luego de haber ejecutado un Map Reduce}, label={code/hdfs-blocks2.sh}]{code/hdfs-blocks2.sh}
+\end{code}
+
+Notaremos que existe una seccion que muestra la cantidad de Data Nodes, si muestra 4 entonces configuramos correctamente
+nuestro cluster.
+
+\newpage
+
+\subsubsection*{Ejecutar el script de Map Reduce con Hadoop}
+
+Finalmente, ejecutamos nuestro algoritmo de Map Reduce. Para esto basta con crear un directorio /data, almacenar nuestro archivo
+a leer y finalmente ejecutar el ejecutable JAR contenido en nuestra carpeta de Hadoop. Una vez hecho esto, podemos analizar la
+salida del Map Reduce haciendole un Cat y pasandolo por Pipe a More para desplezgar la informacion por pantalla:
+
+\begin{code}[H]
+    \lstinputlisting[style=bashstyle, caption={Ejecutar el Map Reduce y leer su salida}, label={code/exec_map_reduce.sh}]{code/exec_map_reduce.sh}
 \end{code}
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{figure-000}
-    \caption{Captura de pantalla de la ``AWS Management Console - EC2'' que muestra las máquinas del cluster creado con el tutorial
-    {\color{red} Se debe ver la consola completa. En las columnas seleccione: Name, Instance ID, Instance state, Instance type, Status check, Public IPv4 address, Private IP Address}}
-    \label{fig:001}
+    \includegraphics[width=\textwidth]{5-creacion_de_worker-3.PNG}
+    \caption{Captura de pantalla de la ``AWS Management Console - EC2'' que muestra las máquinas del cluster creado con el tutorial}
+    \label{5-creacion_de_worker-3.PNG}
 \end{figure}
+
+\newpage
 
 \subsection{Expansión del cluster}
 
-{\color{red} Desarrolle un procedimiento para expandir el tamaño del cluster de 4 a 8 trabajadores. Las máquinas de la ampliación también deben ser de tipo \textbf{t2.micro}. Considere que una ampliación de la cantidad de máquinas puede conllevar cambios en algunos de los parámetros de configuración establecidos en los archivos \textbf{.xml}. Si es así, indique que parámetros fueron modificados y la razón de la siguueinte forma:
-\begin{itemize}
-    \item \textbf{aasdf.qwer.zxcv}: Valor cambia de x a y debido a el aumento de la capacidad
-    \item \textbf{aasdf.qwer.zxcv}: Valor cambia de x a y debido a el aumento de la capacidad
-\end{itemize}
-}
+\noindent
+Para expandir el cluster a 8 Workers, lo primero seria replicar las instancias desde AWS, estas debiesen tener los mismos
+atributos que los workers originales. Lo segundo seria actualizar la configuracion desde el Master para incluir las nuevas
+IP's y habilitar el uso de 4 Nodos desde los XML de Hadoop. Lo tercero seria configurar las conexiones de SSH hacia los workers
+nuevos, para esto podemos reutilizar el script de Bash pero solo con las IP's privadas nuevas.
 
-{\color{red} En esta sección indique el procedimiento desarrollado y agregue cualquier código que haya sido utilizado en caso que este sea diferente o complementario al código utilizado en la subsección anterior. Se provee un ejemplo de como incorporar código escrito en bash (puede incluir varios fragmentos independientes, no es necesario que estén todos en el mismo bloque de código).}
+\begin{code}[H]
+    \lstinputlisting[style=bashstyle, caption={Los archivos que hay que modificar antes de ejecutar el script de instalacion nuevamente}, label={code/expand_to_8.sh}]{code/expand_to_8.sh}
+\end{code}
 
 \begin{code}[H]
 \lstinputlisting[style=bashstyle, caption={Código utilizado en la expansión del cluster}, label={lst:002}]{code/code-000.sh}
@@ -145,32 +293,32 @@ conectarnos a si mismo por LocalHost.
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{figure-000}
-    \caption{Captura de pantalla de la ``AWS Management Console - EC2'' que muestra las máquinas del cluster expandido
-    {\color{red} Se debe ver la consola completa. En las columnas seleccione: Name, Instance ID, Instance state, Instance type, Status check, Public IPv4 address, Private IP Address}}
-    \label{fig:002}
+    \includegraphics[width=\textwidth]{expanded_cluster_ec2}
+    \caption{Captura de pantalla de la ``AWS Management Console - EC2'' que muestra las máquinas del cluster expandido}
+    \label{expanded_cluster_ec2}
 \end{figure}
 
 \subsection{Cliente web}
 
-La figura \ref{fig:003} muestra la consola web de Hadoop y la figura \ref{fig:004} la consola web del HDFS.
+Aqui podemos apreciar todas las instancias desde la interfaz de EC2 de AWS, las instancias expandidas tienen el nombre de Worker
+y un numoro que va desde 5 hasta 8. Sus direcciones IP privadas aparecen en el apartado de expansion y tienen las mismas
+caracteristicas que los otros Nodos.
 
-{\color{red} En esta sección explique el contenido que se está mostrando en cada una de las figuras referenciadas.}
+
+La figura \ref{hadoop.PNG} muestra la consola web de Hadoop y la figura \ref{hdfs.PNG} la consola web del HDFS.
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{figure-000}
-    \caption{Captura de pantalla del cliente web de Hadoop
-    {\color{red} Mostrar la consola web de Hadoop en la sección de aplicaciones terminadas, en las que se debe ver a lo menos los trabajos de la validación del cluster original y los trabajos que haya usado para validar el funcionamiento de la expansión del cluster}}
-    \label{fig:003}
+    \includegraphics[width=\textwidth]{hadoop.PNG}
+    \caption{Captura de pantalla del cliente web de Hadoop}
+    \label{hadoop.PNG}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{figure-000}
-    \caption{Captura de pantalla del cliente web de HDFS
-    {\color{red} Mostrar la consola web de HDFS mostrando alguno de los archivos que hayan sido agregados al dfs.}}
-    \label{fig:004}
+    \includegraphics[width=\textwidth]{hdfs.PNG}
+    \caption{Captura de pantalla del cliente web de HDFS}
+    \label{hdfs.PNG}
 \end{figure}
 
 \section{Instalación de Apache Hive}

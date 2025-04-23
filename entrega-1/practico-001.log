@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.22)  22 APR 2025 16:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.21)  22 APR 2025 23:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -8,8 +8,8 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-03-26>
 (C:\Program Files\MiKTeX\tex/latex/base\article.cls
 Document Class: article 2024/06/29 v1.4n Standard LaTeX document class
-(C:\Program Files\MiKTeX\tex/latex/base\size12.clo
-File: size12.clo 2024/06/29 v1.4n Standard LaTeX file (size option)
+(C:\Program Files\MiKTeX\tex/latex/base\size10.clo
+File: size10.clo 2024/06/29 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count197
 \c@section=\count198
@@ -520,6 +520,10 @@ Package newfloat Info: float type `code'=4 on input line 86.
 File: l3backend-pdftex.def 2025-03-14 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count337
 )
+
+LaTeX Warning: Unused global option(s):
+    [9pt].
+
 (practico-001.aux
 LaTeX Info: Redefining \. on input line 11.
 LaTeX Info: Redefining \% on input line 11.
@@ -569,23 +573,23 @@ Package caption Info: End \AtBeginDocument code.
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: twoside 
-* h-part:(L,W,R)=(90.3375pt, 433.62001pt, 90.3375pt)
-* v-part:(T,H,B)=(72.26999pt, 650.43001pt, 72.26999pt)
+* h-part:(L,W,R)=(36.135pt, 542.02501pt, 36.135pt)
+* v-part:(T,H,B)=(36.135pt, 722.7pt, 36.135pt)
 * \paperwidth=614.295pt
 * \paperheight=794.96999pt
-* \textwidth=433.62001pt
-* \textheight=650.43001pt
-* \oddsidemargin=18.0675pt
-* \evensidemargin=18.0675pt
-* \topmargin=-40.0pt
-* \headheight=15.0pt
+* \textwidth=542.02501pt
+* \textheight=722.7pt
+* \oddsidemargin=-36.135pt
+* \evensidemargin=-36.135pt
+* \topmargin=-75.135pt
+* \headheight=14.0pt
 * \headsep=25.0pt
-* \topskip=12.0pt
+* \topskip=10.0pt
 * \footskip=30.0pt
-* \marginparwidth=95.0pt
-* \marginparsep=10.0pt
+* \marginparwidth=121.0pt
+* \marginparsep=11.0pt
 * \columnsep=10.0pt
-* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -630,13 +634,11 @@ File: ../latex-report-001/logo-utfsm.png Graphic file (type png)
 <use ../latex-report-001/logo-utfsm.png>
 Package pdftex.def Info: ../latex-report-001/logo-utfsm.png  used on input line
  23.
-(pdftex.def)             Requested size: 205.97214pt x 42.84267pt.
+(pdftex.def)             Requested size: 257.46518pt x 53.55394pt.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 23.
+(Font)              <7> on input line 23.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 23.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 23.
+(Font)              <5> on input line 23.
 
 
 [1
@@ -650,173 +652,119 @@ LaTeX Info: Redefining \% on input line 1.
 \tf@toc=\write4
 \openout4 = `practico-001.toc'.
 
-<<<<<<< HEAD
 
-No file practico-001.lof.
-\tf@lof=\write5
-\openout5 = `practico-001.lof'.
 
-No file practico-001.lol.
-=======
- (practico-001.lof
+[2] (practico-001.lof
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-[2])
+)
 \tf@lof=\write5
 \openout5 = `practico-001.lof'.
 
- (practico-001.lol)
->>>>>>> 57695f6aaa437042ef46b7ba6bfe26120092e78b
+
+
+[3] (practico-001.lol)
 \tf@lol=\write6
 \openout6 = `practico-001.lol'.
 
 
 
-<<<<<<< HEAD
-[2]
-
-[3] (C:\Program Files\MiKTeX\tex/latex/listings\lstlang1.sty
-=======
-[3]
-
-[4]
-
-[5] (C:\Program Files\MiKTeX\tex/latex/listings\lstlang1.sty
->>>>>>> 57695f6aaa437042ef46b7ba6bfe26120092e78b
+[4] (C:\Program Files\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
 (C:\Program Files\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-<<<<<<< HEAD
-nput line 65.
- (code/code-000.sh)
-<figures/figure-000.jpg, id=90, 228.6141pt x 128.6406pt>
-File: figures/figure-000.jpg Graphic file (type jpg)
-<use figures/figure-000.jpg>
-Package pdftex.def Info: figures/figure-000.jpg  used on input line 70.
-(pdftex.def)             Requested size: 433.62001pt x 244.01726pt.
+nput line 85.
 
-(code/code-000.sh)
+(code/ssh_into_master.sh) (code/update.sh) (code/install_java.sh)
 
-[4]
-File: figures/figure-000.jpg Graphic file (type jpg)
-<use figures/figure-000.jpg>
-Package pdftex.def Info: figures/figure-000.jpg  used on input line 93.
-(pdftex.def)             Requested size: 433.62001pt x 244.01726pt.
-File: figures/figure-000.jpg Graphic file (type jpg)
-<use figures/figure-000.jpg>
-Package pdftex.def Info: figures/figure-000.jpg  used on input line 107.
-(pdftex.def)             Requested size: 433.62001pt x 244.01726pt.
-File: figures/figure-000.jpg Graphic file (type jpg)
-<use figures/figure-000.jpg>
-Package pdftex.def Info: figures/figure-000.jpg  used on input line 115.
-(pdftex.def)             Requested size: 433.62001pt x 244.01726pt.
+[5] (code/create_pub_key.sh) (code/download_hadoop.sh) (code/edit_env_vars.sh)
+(code/env_vars.sh)
 
+[6] (code/core-site.xml) (code/hdfs-site.xml)
 
-[5 <./figures/figure-000.jpg>]
-
-[6] (code/code-004.hql)
-
-[7] (code/code-005.txt)
-=======
-nput line 120.
- (code/code-000.sh)
->>>>>>> 57695f6aaa437042ef46b7ba6bfe26120092e78b
+[7] (code/mapred-site.xml) (code/yarn-site.xml)
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-
-
-<<<<<<< HEAD
-[8] (code/code-006.txt) (code/code-000.sh)
-=======
-[6]
-<figures/figure-000.jpg, id=137, 228.6141pt x 128.6406pt>
-File: figures/figure-000.jpg Graphic file (type jpg)
-<use figures/figure-000.jpg>
-Package pdftex.def Info: figures/figure-000.jpg  used on input line 125.
-(pdftex.def)             Requested size: 433.62001pt x 244.01726pt.
-
-
-[7 <./figures/figure-000.jpg>] (code/code-000.sh)
-File: figures/figure-000.jpg Graphic file (type jpg)
-<use figures/figure-000.jpg>
-Package pdftex.def Info: figures/figure-000.jpg  used on input line 148.
-(pdftex.def)             Requested size: 433.62001pt x 244.01726pt.
-File: figures/figure-000.jpg Graphic file (type jpg)
-<use figures/figure-000.jpg>
-Package pdftex.def Info: figures/figure-000.jpg  used on input line 162.
-(pdftex.def)             Requested size: 433.62001pt x 244.01726pt.
 
 
 [8]
-File: figures/figure-000.jpg Graphic file (type jpg)
-<use figures/figure-000.jpg>
-Package pdftex.def Info: figures/figure-000.jpg  used on input line 170.
-(pdftex.def)             Requested size: 433.62001pt x 244.01726pt.
 
-
-[9] (code/code-004.hql)
->>>>>>> 57695f6aaa437042ef46b7ba6bfe26120092e78b
-Underfull \vbox (badness 10000) has occurred while \output is active []
+[9] (code/worker_priv_ip.sh) (code/arch_hadoop.sh) (code/install1.sh)
+Underfull \vbox (badness 1859) has occurred while \output is active []
 
 
 
-<<<<<<< HEAD
-[9]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 160.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 160.
-
-Overfull \hbox (2.22662pt too wide) in paragraph at lines 166--167
-=======
-[10] (code/code-005.txt)
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-[11] (code/code-006.txt) (code/code-000.sh)
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-[12]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 215.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 215.
-
-Overfull \hbox (2.22662pt too wide) in paragraph at lines 221--222
->>>>>>> 57695f6aaa437042ef46b7ba6bfe26120092e78b
-[]\T1/Crlt-LF/m/n/12 Desarrolle un pro-ce-di-mien-to que per-mi-ta im-por-tar e
-l ar-chi-vo \T1/Crlt-LF/b/n/12 vlt_observations_000.csv
- []
-
-
-
-<<<<<<< HEAD
 [10]
-=======
-[13]
->>>>>>> 57695f6aaa437042ef46b7ba6bfe26120092e78b
+
+[11] (code/install2.sh)
+
+[12] (code/init_cluster.sh) (code/hdfs-blocks1.sh) (code/hdfs-blocks2.sh
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <9> on input line 12.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 12.
+)
+
+[13] (code/exec_map_reduce.sh)
+<figures/5-creacion_de_worker-3.PNG, id=489, 556.32843pt x 214.55156pt>
+File: figures/5-creacion_de_worker-3.PNG Graphic file (type png)
+<use figures/5-creacion_de_worker-3.PNG>
+Package pdftex.def Info: figures/5-creacion_de_worker-3.PNG  used on input line
+ 271.
+(pdftex.def)             Requested size: 542.02501pt x 209.03796pt.
+
+
+[14 <./figures/5-creacion_de_worker-3.PNG>] (code/expand_to_8.sh)
+(code/code-000.sh)
+<figures/expanded_cluster_ec2.png, id=502, 1289.56781pt x 635.37375pt>
+File: figures/expanded_cluster_ec2.png Graphic file (type png)
+<use figures/expanded_cluster_ec2.png>
+Package pdftex.def Info: figures/expanded_cluster_ec2.png  used on input line 2
+96.
+(pdftex.def)             Requested size: 542.02501pt x 267.04906pt.
+<figures/hadoop.PNG, id=505, 1424.32124pt x 694.84593pt>
+File: figures/hadoop.PNG Graphic file (type png)
+<use figures/hadoop.PNG>
+Package pdftex.def Info: figures/hadoop.PNG  used on input line 312.
+(pdftex.def)             Requested size: 542.02501pt x 264.41528pt.
+<figures/hdfs.PNG, id=506, 1053.9375pt x 665.48625pt>
+File: figures/hdfs.PNG Graphic file (type png)
+<use figures/hdfs.PNG>
+Package pdftex.def Info: figures/hdfs.PNG  used on input line 319.
+(pdftex.def)             Requested size: 542.02501pt x 342.26721pt.
+
+Underfull \vbox (badness 1540) has occurred while \output is active []
+
+
+
+[15]
+
+[16 <./figures/expanded_cluster_ec2.png> <./figures/hadoop.PNG>]
+
+[17 <./figures/hdfs.PNG>] (code/code-004.hql) (code/code-005.txt)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+[18] (code/code-006.txt) (code/code-000.sh)
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 363.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+[19]
 
 Package caption Warning: Unused \captionsetup[table] on input line 77.
 See the caption package documentation for explanation.
 
 
 
-<<<<<<< HEAD
-[11] (practico-001.aux
-=======
-[14] (practico-001.aux
->>>>>>> 57695f6aaa437042ef46b7ba6bfe26120092e78b
+[20] (practico-001.aux
 LaTeX Info: Redefining \. on input line 11.
 LaTeX Info: Redefining \% on input line 11.
 )
@@ -824,61 +772,26 @@ LaTeX Info: Redefining \% on input line 11.
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-03-26>
  ***********
-<<<<<<< HEAD
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-=======
->>>>>>> 57695f6aaa437042ef46b7ba6bfe26120092e78b
 Package rerunfilecheck Info: File `practico-001.out' has not changed.
 (rerunfilecheck)             Checksum: B10677158A4FA147828926938F93CBC0;1621.
  ) 
 Here is how much of TeX's memory you used:
-<<<<<<< HEAD
- 16868 strings out of 469958
- 270288 string characters out of 5479868
- 890894 words of memory out of 5000000
- 43280 multiletter control sequences out of 15000+600000
- 745948 words of font info for 79 fonts, out of 8000000 for 9000
+ 17556 strings out of 469958
+ 282387 string characters out of 5479868
+ 943391 words of memory out of 5000000
+ 43542 multiletter control sequences out of 15000+600000
+ 745946 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 80i,11n,122p,1084b,1563s stack positions out of 10000i,1000n,20000p,200000b,200000s
-
-pdfTeX warning (dest): name{figure.caption.7} has been referenced but does not 
-exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{figure.caption.4} has been referenced but does not 
-exist, replaced by a fixed one
-
- <C:\Users\ElMaikina\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ec
-tt1000.pk> <C:\Users\ElMaikina\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
-/dpi600\ectt1095.pk> <C:\Users\ElMaikina\AppData\Local\MiKTeX\fonts/pk/ljfour/j
-knappen/ec/dpi600\ectt1200.pk><C:/Users/ElMaikina/AppData/Roaming/MiKTeX/fonts/
-type1/google/carlito/Crlt-Bold.pfb><C:/Users/ElMaikina/AppData/Roaming/MiKTeX/f
-onts/type1/google/carlito/Crlt-Regular.pfb>
-Output written on practico-001.pdf (11 pages, 325153 bytes).
-PDF statistics:
- 387 PDF objects out of 1000 (max. 8388607)
- 109 named destinations out of 1000 (max. 500000)
-=======
- 16881 strings out of 469958
- 270579 string characters out of 5479868
- 893893 words of memory out of 5000000
- 43282 multiletter control sequences out of 15000+600000
- 745948 words of font info for 79 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 80i,12n,122p,1084b,1565s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 80i,12n,122p,1084b,1563s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\ElMaikina\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\
-ectt1000.pk> <C:\Users\ElMaikina\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/
-ec/dpi600\ectt1095.pk> <C:\Users\ElMaikina\AppData\Local\MiKTeX\fonts/pk/ljfour
-/jknappen/ec/dpi600\ectt1200.pk><C:/Users/ElMaikina/AppData/Roaming/MiKTeX/font
+ectt0800.pk> <C:\Users\ElMaikina\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/
+ec/dpi600\ectt1000.pk> <C:\Users\ElMaikina\AppData\Local\MiKTeX\fonts/pk/ljfour
+/jknappen/ec/dpi600\ectt0900.pk><C:/Users/ElMaikina/AppData/Roaming/MiKTeX/font
 s/type1/google/carlito/Crlt-Bold.pfb><C:/Users/ElMaikina/AppData/Roaming/MiKTeX
 /fonts/type1/google/carlito/Crlt-Regular.pfb>
-Output written on practico-001.pdf (14 pages, 337800 bytes).
+Output written on practico-001.pdf (20 pages, 512091 bytes).
 PDF statistics:
- 427 PDF objects out of 1000 (max. 8388607)
- 116 named destinations out of 1000 (max. 500000)
->>>>>>> 57695f6aaa437042ef46b7ba6bfe26120092e78b
- 107 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 896 PDF objects out of 1000 (max. 8388607)
+ 471 named destinations out of 1000 (max. 500000)
+ 122 words of extra memory for PDF output out of 10000 (max. 10000000)
 
