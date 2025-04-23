@@ -1,0 +1,198 @@
+
+% Packages
+\usepackage[spanish]{babel}
+\usepackage{caption}
+\usepackage[sfdefault,lf]{carlito}
+\usepackage{datetime}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{newfloat}
+\usepackage{totcount}
+\usepackage[table]{xcolor}
+\usepackage{xurl}
+
+% Macros
+\newcommand{\printif}[3]{\ifcsname @#1\endcsname#2\else#3\fi}
+
+% Variables
+\makeatletter
+  \def\institution#1{\gdef\@institution{#1}}
+  \def\classcode#1{\gdef\@classcode{#1}}
+  \def\classname#1{\gdef\@classname{#1}}
+  \def\classsemester#1{\gdef\@classsemester{#1}}
+  \def\classparallel#1{\gdef\@classparallel{#1}}
+  \def\doctitle#1{\gdef\@doctitle{#1}}
+  \def\docsubtitle#1{\gdef\@docsubtitle{#1}}
+  \def\version#1{\gdef\@version{#1}}
+  \def\astudentname#1{\gdef\@astudentname{#1}}
+  \def\astudentlastname#1{\gdef\@astudentlastname{#1}}
+  \def\astudentrol#1{\gdef\@astudentrol{#1}}
+  \def\astudentemail#1{\gdef\@astudentemail{#1}}
+  \def\bstudentname#1{\gdef\@bstudentname{#1}}
+  \def\bstudentlastname#1{\gdef\@bstudentlastname{#1}}
+  \def\bstudentrol#1{\gdef\@bstudentrol{#1}}
+  \def\bstudentemail#1{\gdef\@bstudentemail{#1}}
+  \def\cstudentname#1{\gdef\@cstudentname{#1}}
+  \def\cstudentlastname#1{\gdef\@cstudentlastname{#1}}
+  \def\cstudentrol#1{\gdef\@cstudentrol{#1}}
+  \def\cstudentemail#1{\gdef\@cstudentemail{#1}}
+\makeatother
+
+% Page geometry
+\geometry{
+  letterpaper,
+  top=1.0in,
+  bottom=1.0in,
+  left=1.25in,
+  right=1.25in,
+  headheight=15pt,
+}
+\setlength\parskip{1em}
+\setlength\parindent{15pt}
+\DeclareCaptionFormat{elements}{\captionsetup{justification=justified}\textbf{#1#2}#3\par}
+
+% Header and footer
+\pagestyle{fancy}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+\makeatletter
+  \fancyhead[LE]{\printif{classcode}{\@classcode\ - }{}\@classsemester}
+  \fancyhead[RE]{\@doctitle}
+  \fancyhead[LO]{\@astudentlastname\printif{bstudentlastname}{, \@bstudentlastname}{}\printif{cstudentlastname}{, \@cstudentlastname}{}}
+  \fancyhead[RO]{\printif{version}{\@version\ - }{}\the\year/\two@digits{\month}/\two@digits{\day}}
+\makeatother
+
+% Tables configuration
+\regtotcounter{table}
+
+\captionsetup[table]{name=Tabla}
+\captionsetup[table]{format=elements, singlelinecheck=false, margin=0pt, font={sf,footnotesize}}
+
+% Figures configuration
+\regtotcounter{figure}
+\graphicspath{{figures/}}
+\captionsetup[figure]{format=elements, singlelinecheck=false, margin=0pt, font={sf,footnotesize}}
+
+% Code configurations
+\DeclareFloatingEnvironment[fileext=loc]{code}
+\regtotcounter{lstlisting}
+\renewcommand\lstlistingname{Código}
+\captionsetup[lstlisting]{format=elements, singlelinecheck=false, margin=0pt, font={sf,footnotesize}}
+\lstset{
+    inputencoding=utf8,
+    extendedchars=true,
+    literate=%
+    {á}{{\'a}}1
+    {é}{{\'e}}1
+    {í}{{\'i}}1
+    {ó}{{\'o}}1
+    {ú}{{\'u}}1
+    {Á}{{\'A}}1
+    {É}{{\'E}}1
+    {Í}{{\'I}}1
+    {Ó}{{\'O}}1
+    {Ú}{{\'U}}1
+    {ñ}{{\~n}}1
+    {Ñ}{{\~N}}1
+}
+\lstset{
+    basicstyle=\small\ttfamily,
+    backgroundcolor=\color{gray!10},
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!40!black},
+    stringstyle=\color{red},
+    rulecolor=\color{gray},
+    frame=single,
+    framerule=0pt,
+    framesep=2pt,
+    captionpos=b,
+    aboveskip=10pt,
+    belowskip=5pt,
+    columns=fullflexible,
+    keepspaces=true,
+    numberstyle=\tiny\color{gray},
+    numbers=left,
+    stepnumber=1,
+    numbersep=5pt,
+}
+\lstdefinestyle{pythonstyle}{
+    language=python
+}
+\lstnewenvironment{pythoncode}{\lstset{style=pythonstyle}}{}
+\lstdefinestyle{bashstyle}{
+    language=bash
+}
+\lstnewenvironment{bashcode}{\lstset{style=bashstyle}}{}
+\lstdefinestyle{xmlstyle}{
+    language=xml
+}
+\lstnewenvironment{xmlcode}{\lstset{style=xmlstyle}}{}
+\lstdefinestyle{javastyle}{
+    language=java
+}
+\lstnewenvironment{javacode}{\lstset{style=javastyle}}{}
+\lstdefinestyle{plainstyle}{
+}
+\lstnewenvironment{plaincode}{\lstset{style=plainstyle}}{}
+
+% Custom titlepage
+\makeatletter
+\def\@maketitle{
+  % Configurations
+  \renewcommand\listtablename{Índice de tablas}
+  \renewcommand\lstlistlistingname{Índice de fragmentos de codigo}
+  % Cover
+  \thispagestyle{empty}
+  \noindent\includegraphics[width=.475 \textwidth]{../latex-report-001/logo-\@institution}
+  \vfill
+  \vfill
+  \begin{center}
+    \printif{docsubtitle}{\fontsize{25}{25}\selectfont \@docsubtitle\\[3em]}{}
+    {\fontsize{35}{35}\selectfont \@doctitle}\\[2.0em]
+    {\fontsize{15}{15}\selectfont \printif{classcode}{\@classcode\ - }{}\@classsemester\printif{classparallel}{ - \@classparallel}{}}\\[10pt]
+    {\fontsize{20}{20}\selectfont \@classname}\\[5pt]
+    {\fontsize{15}{15}\selectfont \today\printif{version}{ - \@version}{}}
+  \end{center}
+  \vfill
+  \vfill
+  \vfill
+  \begin{flushright}
+    \begin{tabular}{r|l}
+      \printif{astudentname}{\@astudentname\ \@astudentlastname & \@astudentrol \\ \@astudentemail & \\}{}
+      \printif{bstudentname}{\@bstudentname\ \@bstudentlastname & \@bstudentrol \\ \@bstudentemail & \\}{}
+      \printif{cstudentname}{\@cstudentname\ \@cstudentlastname & \@cstudentrol \\ \@cstudentemail & \\}{}
+    \end{tabular}
+  \end{flushright}
+  \newpage
+  % Index
+  % Table of contents
+  \tableofcontents
+  % Tables
+  \ifnum \totvalue{table}>0
+    \listoftables
+  \fi
+  % Figures
+  \ifnum \totvalue{figure}>0
+    \listoffigures
+  \fi
+  % Code
+  \ifnum \totvalue{lstlisting}>0
+    \lstlistoflistings
+  \fi
+  \newpage
+}
+\makeatother
+
+% Hooks
+\AtBeginDocument{
+  \maketitle
+}
