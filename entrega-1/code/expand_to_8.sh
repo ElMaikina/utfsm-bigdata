@@ -11,7 +11,7 @@
 # ...
 <property>
     <name>mapreduce.job.running.reduce.limit</name>
-    <value>4</value> # Modificar de 4 a 8
+    <value>8</value> # Modificar de 4 a 8
 </property>
 
 # hadoop-3.3.6/etc/hadoop/workers
