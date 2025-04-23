@@ -17,8 +17,8 @@
 % Estudiante
 \astudentname{Miguel}
 \astudentlastname{Soto}
-\astudentrol{204303630-0}
-\astudentemail{miguel.sotod@sansano.usm.com}
+\astudentrol{20430363-0}
+\astudentemail{miguel.sotod@sansano.usm.cl}
   
 \begin{document}
 
@@ -60,6 +60,61 @@ Los 20\% otorgados a entregas anteriores en las entregas 2 y 3 están pensados p
 {\color{red} Todos los snippets de código que sean proveidos deben ser adjuntados al archivo zip de la entrega respetando la numeración que tengan en el informe.}
 
 {\color{red} Las imágenes deben ser referenciadas como ``Figura \ref{fig:001}'', al igual que los snippets de código como ``Código \ref{lst:001}''}
+
+Para la creacion del Cluster en Amazon Web Services, fue necesario seguir los pasos indicados en el tutorial
+entregado en el Slide T01 - Hadoop Cluster - v1.0 entregado en Aula. El instructivo constaba de los siguientes
+pasos:
+\begin{itemize}
+    \item Crear la cuenta de AWS
+    \item Preparar en entorno del Cluster
+    \item Configurar la maquina Master
+    \item Configurar todos los Workers
+    \item Inicializar el Cluster
+    \item Ejecutar el script de Map Reduce con Hadoop
+\end{itemize}
+
+\subsubsection*{Crear la cuenta de AWS}
+Para la creacion de la cuenta de AWS simplemente segui las indicaciones en el correo de invitacion indicado por el profesor.
+Posterior a eso, me fui directamente a la seccion de Modules, en donde estaba el Modulo de Launch AWS Academy Learner Lab,
+que sirve para entrar a la Console Home de AWS.
+
+\subsubsection*{Preparar en entorno del Cluster}
+
+Una vez en Console Home, creamos una instancia de tipo EC2, para la cual creamos los Key Pairs, el Security Group y la instancia
+Master.
+
+Para los Key Pairs, creamos una llave de tipo RSA con formato de archivo PEM.
+
+Para el Security Group, creamos tres reglas, 
+una Inbound Rule de tipo SSH con tipo de fuente Anywhere-IPv4
+(para entrar por SSH),
+una Inbound Rule de tipo Custom TCP con rango de puerto 8088 tipo de fuente Anywhere-IPv4
+(para la consola web de Hadoop),
+una Inbound Rule de tipo Custom TCP con rango de puerto 9870 tipo de fuente Anywhere-IPv4
+(para la consola web de HDFS)
+y finalmente, una Inbound Rule de tipo Custom TCP con rango de puerto de 0 a 65535 tipo de 
+fuente Anywhere-IPv4.
+
+Para la instancia Master creamos un nodo con Ubuntu 24.04 de tipo t2.micro y con 16gb de almacenamiento.
+Esta instancia usara la Key y Security Group recien creados (al igual que las instancias Worker mas adelante). 
+Una vez configurados los parametros, lanzamos la instancia y nos conectamos por SSH.
+
+\subsubsection*{Configurar la maquina Master}
+
+El primer paso es logicamente actualizar los paquetes del sistema, para esto es necesario ejecutar el siguiente
+comando:
+
+Una vez hecho esto, instalamos el paquete correspondiente a Java / OpenJDK 11.
+
+Una vez que hayamos resuelto todos los paquetes necesarios, tenemos que crear una llave publica con el siguiente
+comando:
+
+Esta llave publica la guardaremos en la carpeta de Authorized Keys para SSH, lo cual permitira al Master
+conectarnos a si mismo por LocalHost.
+
+\subsubsection*{Configurar todos los Workers}
+\subsubsection*{Inicializar el Cluster}
+\subsubsection*{Ejecutar el script de Map Reduce con Hadoop}
 
 \begin{code}[H]
 \lstinputlisting[style=bashstyle, caption={Código utilizado en la implementación del tutorial}, label={lst:001}]{code/code-000.sh}

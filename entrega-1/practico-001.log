@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.21)  21 APR 2025 23:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.22)  22 APR 2025 16:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -650,26 +650,51 @@ LaTeX Info: Redefining \% on input line 1.
 \tf@toc=\write4
 \openout4 = `practico-001.toc'.
 
+<<<<<<< HEAD
 
 No file practico-001.lof.
 \tf@lof=\write5
 \openout5 = `practico-001.lof'.
 
 No file practico-001.lol.
+=======
+ (practico-001.lof
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+[2])
+\tf@lof=\write5
+\openout5 = `practico-001.lof'.
+
+ (practico-001.lol)
+>>>>>>> 57695f6aaa437042ef46b7ba6bfe26120092e78b
 \tf@lol=\write6
 \openout6 = `practico-001.lol'.
 
 
 
+<<<<<<< HEAD
 [2]
 
 [3] (C:\Program Files\MiKTeX\tex/latex/listings\lstlang1.sty
+=======
+[3]
+
+[4]
+
+[5] (C:\Program Files\MiKTeX\tex/latex/listings\lstlang1.sty
+>>>>>>> 57695f6aaa437042ef46b7ba6bfe26120092e78b
 File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
 (C:\Program Files\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
+<<<<<<< HEAD
 nput line 65.
  (code/code-000.sh)
 <figures/figure-000.jpg, id=90, 228.6141pt x 128.6406pt>
@@ -700,15 +725,50 @@ Package pdftex.def Info: figures/figure-000.jpg  used on input line 115.
 [6] (code/code-004.hql)
 
 [7] (code/code-005.txt)
+=======
+nput line 120.
+ (code/code-000.sh)
+>>>>>>> 57695f6aaa437042ef46b7ba6bfe26120092e78b
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
+<<<<<<< HEAD
 [8] (code/code-006.txt) (code/code-000.sh)
+=======
+[6]
+<figures/figure-000.jpg, id=137, 228.6141pt x 128.6406pt>
+File: figures/figure-000.jpg Graphic file (type jpg)
+<use figures/figure-000.jpg>
+Package pdftex.def Info: figures/figure-000.jpg  used on input line 125.
+(pdftex.def)             Requested size: 433.62001pt x 244.01726pt.
+
+
+[7 <./figures/figure-000.jpg>] (code/code-000.sh)
+File: figures/figure-000.jpg Graphic file (type jpg)
+<use figures/figure-000.jpg>
+Package pdftex.def Info: figures/figure-000.jpg  used on input line 148.
+(pdftex.def)             Requested size: 433.62001pt x 244.01726pt.
+File: figures/figure-000.jpg Graphic file (type jpg)
+<use figures/figure-000.jpg>
+Package pdftex.def Info: figures/figure-000.jpg  used on input line 162.
+(pdftex.def)             Requested size: 433.62001pt x 244.01726pt.
+
+
+[8]
+File: figures/figure-000.jpg Graphic file (type jpg)
+<use figures/figure-000.jpg>
+Package pdftex.def Info: figures/figure-000.jpg  used on input line 170.
+(pdftex.def)             Requested size: 433.62001pt x 244.01726pt.
+
+
+[9] (code/code-004.hql)
+>>>>>>> 57695f6aaa437042ef46b7ba6bfe26120092e78b
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
+<<<<<<< HEAD
 [9]
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 160.
@@ -716,20 +776,47 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 160.
 
 Overfull \hbox (2.22662pt too wide) in paragraph at lines 166--167
+=======
+[10] (code/code-005.txt)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+[11] (code/code-006.txt) (code/code-000.sh)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+[12]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 215.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 215.
+
+Overfull \hbox (2.22662pt too wide) in paragraph at lines 221--222
+>>>>>>> 57695f6aaa437042ef46b7ba6bfe26120092e78b
 []\T1/Crlt-LF/m/n/12 Desarrolle un pro-ce-di-mien-to que per-mi-ta im-por-tar e
 l ar-chi-vo \T1/Crlt-LF/b/n/12 vlt_observations_000.csv
  []
 
 
 
+<<<<<<< HEAD
 [10]
+=======
+[13]
+>>>>>>> 57695f6aaa437042ef46b7ba6bfe26120092e78b
 
 Package caption Warning: Unused \captionsetup[table] on input line 77.
 See the caption package documentation for explanation.
 
 
 
+<<<<<<< HEAD
 [11] (practico-001.aux
+=======
+[14] (practico-001.aux
+>>>>>>> 57695f6aaa437042ef46b7ba6bfe26120092e78b
 LaTeX Info: Redefining \. on input line 11.
 LaTeX Info: Redefining \% on input line 11.
 )
@@ -737,14 +824,18 @@ LaTeX Info: Redefining \% on input line 11.
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-03-26>
  ***********
+<<<<<<< HEAD
 
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
+=======
+>>>>>>> 57695f6aaa437042ef46b7ba6bfe26120092e78b
 Package rerunfilecheck Info: File `practico-001.out' has not changed.
 (rerunfilecheck)             Checksum: B10677158A4FA147828926938F93CBC0;1621.
  ) 
 Here is how much of TeX's memory you used:
+<<<<<<< HEAD
  16868 strings out of 469958
  270288 string characters out of 5479868
  890894 words of memory out of 5000000
@@ -770,5 +861,24 @@ Output written on practico-001.pdf (11 pages, 325153 bytes).
 PDF statistics:
  387 PDF objects out of 1000 (max. 8388607)
  109 named destinations out of 1000 (max. 500000)
+=======
+ 16881 strings out of 469958
+ 270579 string characters out of 5479868
+ 893893 words of memory out of 5000000
+ 43282 multiletter control sequences out of 15000+600000
+ 745948 words of font info for 79 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 80i,12n,122p,1084b,1565s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <C:\Users\ElMaikina\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\
+ectt1000.pk> <C:\Users\ElMaikina\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/
+ec/dpi600\ectt1095.pk> <C:\Users\ElMaikina\AppData\Local\MiKTeX\fonts/pk/ljfour
+/jknappen/ec/dpi600\ectt1200.pk><C:/Users/ElMaikina/AppData/Roaming/MiKTeX/font
+s/type1/google/carlito/Crlt-Bold.pfb><C:/Users/ElMaikina/AppData/Roaming/MiKTeX
+/fonts/type1/google/carlito/Crlt-Regular.pfb>
+Output written on practico-001.pdf (14 pages, 337800 bytes).
+PDF statistics:
+ 427 PDF objects out of 1000 (max. 8388607)
+ 116 named destinations out of 1000 (max. 500000)
+>>>>>>> 57695f6aaa437042ef46b7ba6bfe26120092e78b
  107 words of extra memory for PDF output out of 10000 (max. 10000000)
 
