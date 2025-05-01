@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.21)  24 APR 2025 01:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.21)  1 MAY 2025 00:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -677,14 +677,15 @@ File: lstlang1.sty 2024/09/23 1.10c listings language file
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
 nput line 85.
 
-(code/ssh_into_master.sh) (code/update.sh)
+(code/ssh_into_master.sh
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <9> on input line 1.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 1.
+) (code/update.sh)
 
-[4] (code/install_java.sh) (code/create_pub_key.sh) (code/download_hadoop.sh
-Overfull \hbox (5.69771pt too wide) in paragraph at lines 1--2
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-) (code/edit_env_vars.sh) (code/env_vars.sh)
+[4] (code/install_java.sh) (code/create_pub_key.sh) (code/download_hadoop.sh)
+(code/edit_env_vars.sh) (code/env_vars.sh)
 
 [5]
 
@@ -706,15 +707,10 @@ Overfull \vbox (39.42001pt too high) has occurred while \output is active []
 
 [11] (code/install2.sh)
 
-[12] (code/init_cluster.sh) (code/hdfs-blocks1.sh) (code/hdfs-blocks2.sh
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <9> on input line 12.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 12.
-)
+[12] (code/init_cluster.sh) (code/hdfs-blocks1.sh) (code/hdfs-blocks2.sh)
 
 [13] (code/exec_map_reduce.sh)
-<figures/5-creacion_de_worker-3.PNG, id=491, 556.32843pt x 214.55156pt>
+<figures/5-creacion_de_worker-3.PNG, id=519, 556.32843pt x 214.55156pt>
 File: figures/5-creacion_de_worker-3.PNG Graphic file (type png)
 <use figures/5-creacion_de_worker-3.PNG>
 Package pdftex.def Info: figures/5-creacion_de_worker-3.PNG  used on input line
@@ -723,52 +719,80 @@ Package pdftex.def Info: figures/5-creacion_de_worker-3.PNG  used on input line
 
 
 [14 <./figures/5-creacion_de_worker-3.PNG>] (code/expand_to_8.sh)
-(code/code-000.sh)
-<figures/expanded_cluster_ec2.png, id=504, 1289.56781pt x 635.37375pt>
+
+[15]
+<figures/expanded_cluster_ec2.png, id=568, 1289.56781pt x 635.37375pt>
 File: figures/expanded_cluster_ec2.png Graphic file (type png)
 <use figures/expanded_cluster_ec2.png>
 Package pdftex.def Info: figures/expanded_cluster_ec2.png  used on input line 2
-96.
+94.
 (pdftex.def)             Requested size: 433.62001pt x 213.63924pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-[15]
-<figures/hadoop.PNG, id=548, 1424.32124pt x 694.84593pt>
+<figures/hadoop.PNG, id=571, 1424.32124pt x 694.84593pt>
 File: figures/hadoop.PNG Graphic file (type png)
 <use figures/hadoop.PNG>
-Package pdftex.def Info: figures/hadoop.PNG  used on input line 312.
+Package pdftex.def Info: figures/hadoop.PNG  used on input line 311.
 (pdftex.def)             Requested size: 433.62001pt x 211.5301pt.
-<figures/hdfs.PNG, id=549, 1053.9375pt x 665.48625pt>
+<figures/hdfs.PNG, id=572, 1053.9375pt x 665.48625pt>
 File: figures/hdfs.PNG Graphic file (type png)
 <use figures/hdfs.PNG>
-Package pdftex.def Info: figures/hdfs.PNG  used on input line 319.
+Package pdftex.def Info: figures/hdfs.PNG  used on input line 318.
 (pdftex.def)             Requested size: 433.62001pt x 273.80565pt.
 
 
 [16 <./figures/expanded_cluster_ec2.png>]
 
-[17 <./figures/hadoop.PNG> <./figures/hdfs.PNG>] (code/code-004.hql)
-(code/code-005.txt)
+[17 <./figures/hadoop.PNG> <./figures/hdfs.PNG>]
+File: figures/hdfs.PNG Graphic file (type png)
+<use figures/hdfs.PNG>
+Package pdftex.def Info: figures/hdfs.PNG  used on input line 337.
+(pdftex.def)             Requested size: 433.62001pt x 273.80565pt.
+ (code/down-hive.sh)
+(code/untar-hive.sh) (code/hive-site.xml)
+
+[18] (code/metastore-n-hiveserver2.sh)
+
+[19] (code/beeline.sh)
+
+[20] (code/code-004.hql)
+
+[21] (code/hive-output-1.sh)
+Overfull \vbox (28.42001pt too high) has occurred while \output is active []
+
+
+
+[22] (code/hive-output-2.sh)
+Overfull \vbox (83.42001pt too high) has occurred while \output is active []
+
+
+
+[23] (code/hive-output-3.sh)
+Overfull \vbox (6.42001pt too high) has occurred while \output is active []
+
+
+
+[24] (code/hive-output-4.sh)
+
+[25] (code/hive-output-5.sh)
+
+[26] (code/hive-output-6.sh) (code/hive-output-7.sh)
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-[18] (code/code-006.txt) (code/code-000.sh)
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 363.
+[27] (code/code-005.txt)
 
+[28] (code/code-006.txt) (code/hive-print-rep.sh)
 
-[19]
+[29] (code/aws-cli.sh)
+
+[30]
 
 Package caption Warning: Unused \captionsetup[table] on input line 77.
 See the caption package documentation for explanation.
 
 
 
-[20] (practico-001.aux
+[31] (practico-001.aux
 LaTeX Info: Redefining \. on input line 11.
 LaTeX Info: Redefining \% on input line 11.
 )
@@ -776,33 +800,25 @@ LaTeX Info: Redefining \% on input line 11.
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-03-26>
  ***********
-
-
-Package rerunfilecheck Warning: File `practico-001.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `practico-001.out':
-(rerunfilecheck)             Before: C23AC520E8B50BE15F1521CDD4BCABC7;1605
-(rerunfilecheck)             After:  B10677158A4FA147828926938F93CBC0;1621.
+Package rerunfilecheck Info: File `practico-001.out' has not changed.
+(rerunfilecheck)             Checksum: B10677158A4FA147828926938F93CBC0;1621.
  ) 
 Here is how much of TeX's memory you used:
- 17556 strings out of 469958
- 282387 string characters out of 5479868
- 942880 words of memory out of 5000000
- 43542 multiletter control sequences out of 15000+600000
- 745946 words of font info for 79 fonts, out of 8000000 for 9000
+ 18313 strings out of 469958
+ 294363 string characters out of 5479868
+ 1493637 words of memory out of 5000000
+ 43844 multiletter control sequences out of 15000+600000
+ 729165 words of font info for 71 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 80i,12n,122p,1084b,1563s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 80i,12n,122p,1084b,1599s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\ElMaikina\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\
-ectt0800.pk> <C:\Users\ElMaikina\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/
-ec/dpi600\ectt1000.pk> <C:\Users\ElMaikina\AppData\Local\MiKTeX\fonts/pk/ljfour
-/jknappen/ec/dpi600\ectt0900.pk><C:/Users/ElMaikina/AppData/Roaming/MiKTeX/font
-s/type1/google/carlito/Crlt-Bold.pfb><C:/Users/ElMaikina/AppData/Roaming/MiKTeX
-/fonts/type1/google/carlito/Crlt-Regular.pfb>
-Output written on practico-001.pdf (20 pages, 512883 bytes).
+ectt0900.pk><C:/Users/ElMaikina/AppData/Roaming/MiKTeX/fonts/type1/google/carli
+to/Crlt-Bold.pfb><C:/Users/ElMaikina/AppData/Roaming/MiKTeX/fonts/type1/google/
+carlito/Crlt-Regular.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/c
+m/cmmi9.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb>
+Output written on practico-001.pdf (31 pages, 599407 bytes).
 PDF statistics:
- 898 PDF objects out of 1000 (max. 8388607)
- 471 named destinations out of 1000 (max. 500000)
+ 1405 PDF objects out of 1440 (max. 8388607)
+ 895 named destinations out of 1000 (max. 500000)
  122 words of extra memory for PDF output out of 10000 (max. 10000000)
 

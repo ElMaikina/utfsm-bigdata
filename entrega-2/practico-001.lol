@@ -18,8 +18,20 @@
 \contentsline {lstlisting}{\numberline {18}{\ignorespaces Estado del HDFS luego de haber ejecutado un Map Reduce}}{13}{lstlisting.18}%
 \contentsline {lstlisting}{\numberline {19}{\ignorespaces Ejecutar el Map Reduce y leer su salida}}{14}{lstlisting.19}%
 \contentsline {lstlisting}{\numberline {20}{\ignorespaces Los archivos que hay que modificar antes de ejecutar el script de instalacion nuevamente}}{15}{lstlisting.20}%
-\contentsline {lstlisting}{\numberline {21}{\ignorespaces Código utilizado en la expansión del cluster}}{15}{lstlisting.21}%
-\contentsline {lstlisting}{\numberline {22}{\ignorespaces Ejemplo de uso de Apache Hive}}{18}{lstlisting.22}%
-\contentsline {lstlisting}{\numberline {23}{\ignorespaces Resultado esperado para ejemplo de uso de Apache Hive {\color {red} Algunos de los valores han sido alterados, deben ser corregidos con el resultado de su procedimiento.}}}{19}{lstlisting.23}%
-\contentsline {lstlisting}{\numberline {24}{\ignorespaces Ejemplo de uso de Apache Hive}}{19}{lstlisting.24}%
-\contentsline {lstlisting}{\numberline {25}{\ignorespaces Script de reporte de DFS}}{19}{lstlisting.25}%
+\contentsline {lstlisting}{\numberline {21}{\ignorespaces Usar WGET para descargar Apache Hive 4.0.1}}{18}{lstlisting.21}%
+\contentsline {lstlisting}{\numberline {22}{\ignorespaces Descomprimimos la carpeta de Apache Hive 4.0.1}}{18}{lstlisting.22}%
+\contentsline {lstlisting}{\numberline {23}{\ignorespaces Archivo de configuracion de Apache Hive}}{19}{lstlisting.23}%
+\contentsline {lstlisting}{\numberline {24}{\ignorespaces Levantar MetaStore y HiveServer2}}{19}{lstlisting.24}%
+\contentsline {lstlisting}{\numberline {25}{\ignorespaces Usar Beeline como interfaz a Hive}}{20}{lstlisting.25}%
+\contentsline {lstlisting}{\numberline {26}{\ignorespaces Ejemplo de uso de Apache Hive}}{21}{lstlisting.26}%
+\contentsline {lstlisting}{\numberline {27}{\ignorespaces Salida de Apache Hive (Parte 1)}}{22}{lstlisting.27}%
+\contentsline {lstlisting}{\numberline {28}{\ignorespaces Salida de Apache Hive (Parte 2)}}{23}{lstlisting.28}%
+\contentsline {lstlisting}{\numberline {29}{\ignorespaces Salida de Apache Hive (Parte 3)}}{24}{lstlisting.29}%
+\contentsline {lstlisting}{\numberline {30}{\ignorespaces Salida de Apache Hive (Parte 4)}}{25}{lstlisting.30}%
+\contentsline {lstlisting}{\numberline {31}{\ignorespaces Salida de Apache Hive (Parte 5)}}{26}{lstlisting.31}%
+\contentsline {lstlisting}{\numberline {32}{\ignorespaces Salida de Apache Hive (Parte 6)}}{27}{lstlisting.32}%
+\contentsline {lstlisting}{\numberline {33}{\ignorespaces Salida de Apache Hive (Parte 7)}}{28}{lstlisting.33}%
+\contentsline {lstlisting}{\numberline {34}{\ignorespaces Resultado esperado para ejemplo de uso de Apache Hive}}{28}{lstlisting.34}%
+\contentsline {lstlisting}{\numberline {35}{\ignorespaces Ejemplo de uso de Apache Hive}}{29}{lstlisting.35}%
+\contentsline {lstlisting}{\numberline {36}{\ignorespaces Muestra el archivo, los bloques que ocupa, el factor de replicacion y la ubicacion de cada bloque}}{29}{lstlisting.36}%
+\contentsline {lstlisting}{\numberline {37}{\ignorespaces Instalar AWS CLI}}{30}{lstlisting.37}%

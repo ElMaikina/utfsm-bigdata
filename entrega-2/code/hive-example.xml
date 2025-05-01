@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <property>
+        <name>metastore.try.direct.sql</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>metastore.warehouse.external.dir</name>
+        <value>/home/ec2-user/metastore_ex</value>
+    </property>
+    <property>
+        <name>hive.metastore.schema.verification</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>datanucleus.schema.autoCreateAll</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>hive.exec.reducers.bytes.per.reducer</name>
+        <value>33554432</value>
+    </property>
+    <property>
+        <name>hive.exec.reducers.max</name>
+        <value>8</value>
+    </property>
+</configuration>
