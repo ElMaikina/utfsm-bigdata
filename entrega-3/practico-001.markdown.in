@@ -1,0 +1,44 @@
+### 🌌 **Descripción de los parámetros:**
+
+| Parámetro         | Significado probable                                                                                                                                 |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **parametro\_0**  | Tipo de calibración o modo de observación (e.g., `FLATSKY`, `LAMPFLAT`)                                                                              |
+| **parametro\_1**  | Tiempo en RA (Ascensión Recta) – formato hh\:mm\:ss.ss (parte de coordenadas celestes)                                                               |
+| **parametro\_2**  | Tiempo en Dec (Declinación) – formato ±dd\:mm\:ss.s (parte de coordenadas celestes)                                                                  |
+| **parametro\_3**  | Fecha y hora de la observación en formato UTC                                                                                                        |
+| **parametro\_4**  | Código del programa de observación asignado por ESO (e.g., 268.C-5772(A))                                                                            |
+| **parametro\_5**  | Lista de investigadores principales o coautores del programa                                                                                         |
+| **parametro\_6**  | Tipo de observador: `Service` (observaciones hechas por personal del observatorio) o `Visitor` (hechas por los propios investigadores)               |
+| **parametro\_7**  | Título del proyecto u objetivo científico de la observación                                                                                          |
+| **parametro\_8**  | Tipo de programa: `DDT` (Directors Discretionary Time), `GTO` (Guaranteed Time Observations), `ToO` (Target of Opportunity), `Large`, `Normal`, etc. |
+| **parametro\_9**  | Instrumento utilizado: `FORS1`, `ISAAC`, `MIDI`, etc.                                                                                                |
+| **parametro\_10** | Tipo de archivo: `ACQUISITION`, `CALIB`, `SCIENCE`, etc.                                                                                             |
+| **parametro\_11** | Tipo de calibración u observación específica (e.g., `FLAT`, `BIAS`, `LAMP`)                                                                          |
+| **parametro\_12** | Modo de observación: `ECHELLE`, `MOS` (multiobjeto), `POLARIMETRY`, `IMAGE`, etc.                                                                    |
+| **parametro\_13** | Nombre único del archivo generado (con prefijo del instrumento y timestamp)                                                                          |
+| **parametro\_14** | Nombre del archivo FITS (formato estándar para datos astronómicos)                                                                                   |
+| **parametro\_15** | Fecha asociada a la observación (posiblemente fecha de la noche de observación)                                                                      |
+| **parametro\_16** | ID del objeto o campo observado                                                                                                                      |
+| **parametro\_17** | Timestamp Unix o alguna codificación interna del observatorio                                                                                        |
+| **parametro\_18** | Pipeline o receta utilizada en el preprocesamiento o reducción de datos                                                                              |
+| **parametro\_19** | Tiempo de finalización de la observación (timestamp en formato ISO 8601)                                                                             |
+| **parametro\_20** | Valor flotante, posiblemente tiempo de exposición en horas, airmass, seeing u otra medida de calidad observacional                                   |
+---
+---
+
+### 🧾 Significado Tentativo de los Parámetros
+
+| Parámetro         | Valores de ejemplo                      | Posible Significado                                                                                                                        |
+| ----------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **parametro\_20** | 0.261 - 0.350                           | **Redshift (z)** o algún tipo de desplazamiento espectral (típico en análisis astronómicos). Valores pequeños indican objetos cercanos.    |
+| **parametro\_21** | 330.0 - 2450.0                          | **Longitud de onda central** en nanómetros (nm), probablemente del filtro o instrumento.                                                   |
+| **parametro\_22** | 1090.5 - 2150.0                         | **Longitud de onda de corte/final** o **intervalo espectral** (en nm). Podría ser también el rango máximo de sensibilidad del instrumento. |
+| **parametro\_23** | "FREE", "CLOSEDNB\_2.07", "FREENONE"    | **Modo de adquisición** o **tipo de filtro NB (narrow band)** o **configuración óptica del instrumento**.                                  |
+| **parametro\_24** | "GRISM1", "HR\_BLUE", "PRISM"           | **Dispersor usado** (GRISM = grating + prism), o configuración espectroscópica. Muy común en instrumentos como VLT, MUSE, etc.             |
+| **parametro\_25** | "CD#1", "HR", "LR"                      | **Configuración espectral del detector** o **modo de observación** (High/Low Resolution, o canales del espectrógrafo).                     |
+| **parametro\_26** | "SLIT\_0.3\_TILTED", "IFU1", "MASK\_L2" | **Máscara de observación** o **geometría de la rendija** (slit), IFU (unidad de campo integral), etc.                                      |
+| **parametro\_27** | 50609.932185 - 51135.058496             | **Fecha en formato Julian Date** (JD), muy común en astronomía. Se puede convertir a calendario gregoriano.                                |
+| **parametro\_28** | 1.054 - 1.093                           | **Airmass** (masa de aire atravesada por la observación). Un valor de 1.0 significa que el objeto está justo en el cenit.                  |
+| **parametro\_29** | 0.81 - 1.06                             | **Seeing** en arcosegundos (condiciones atmosféricas de visibilidad). Valores bajos indican mejor calidad de imagen.                       |
+
+---
