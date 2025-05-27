@@ -1,1 +1,0 @@
-tar -xvzf apache-hive-4.0.1-bin.tar.gz -C .

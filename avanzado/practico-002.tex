@@ -1,0 +1,236 @@
+
+\documentclass[12pt,letterpaper,twoside]{article}
+
+\input{../latex-report-001/preamble}
+
+% Datos de la asignatura
+\institution{utfsm}
+\classcode{INF356}
+\classname{Computación Distribuida para Big Data}
+\classsemester{2025-1}
+\classparallel{200}
+
+% Datos de la entrega
+\doctitle{Trabajo Práctico 2}
+\version{v1.0}
+
+% Estudiante
+\astudentname{Wedge}
+\astudentlastname{Antilles}
+\astudentrol{123456789-0}
+\astudentemail{wedge.antilles@rebelalliance.com}
+  
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Borrar o comentar esta sección instrucciones antes de entregar %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{\color{red}
+\section*{Instrucciones}
+
+El presente documento corresponde a la plantilla para presentar las informaciones que deben ser proveídas para evaluar la entrega.
+
+Todos los textos en rojo a lo largo de la plantilla, junto con esta página de instrucciones, deben ser eliminadas antes de la compilación final.
+
+\newpage
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Map Reduce}
+
+ {\color{red} Una vez terminada esta sección puede destruir su cluster de Hadoop}
+
+\subsection{Implementación extendida de wordcounter}
+
+{\color{red} Utilizando el ejemplo WordCounter de Hadoop, implemente un programa que reciba un archivo y cuente las ocurrencias de cada palabra en ese texto. Debe considerar lo siguiente:
+    \begin{itemize}
+        \item Se considera palabra cualquier secuencia de carácteres separada por espacios
+        \item Una secuencia de carácteres especiales no corresponde a una palabra debe ser descartada
+        \item Se debe eliminar cualquier puntuación al inicio o final de la palabra, pero se debe conservar puntuaciones que estén entre carácteres
+        \item Las palabras se deben contar por su equivalente en letras minúsculas
+    \end{itemize}
+}
+
+\begin{code}[H]
+    \lstinputlisting[style=javastyle, caption={Código utilizado en la implementación del mapper el wordcounter extendido}, label={lst:003}]{code/code-003.java}
+\end{code}
+
+\begin{code}[H]
+    \lstinputlisting[style=javastyle, caption={Código utilizado en la implementación del reducer el wordcounter extendido}, label={lst:004}]{code/code-004.java}
+\end{code}
+
+\subsection{Implementación de selector de columna}
+
+{\color{red} Utilizando el ejemplo WordCounter de Hadoop, implemente un map-reduce que acepte como parámetro un único número entero denominado \texttt{select\_column}. El map-reduce debe procesar un archivo con el formato \textbf{sw-script-e04.txt} y generar archivo que sólo contenga la columna indicada por el parámetro de entrada. Las columnas se cuentan desde 0. El número de columnas corresponde al registro que tenga la mayor cantidad de columnas. Si un registro no tiene valor para la columna indicada, se retorna un string vacío. Si el usuario indica cualquier número de columna fuera de los índices posibles, el archivo de salida debe ser igual al archivo original.
+
+    Note que el archivo \textbf{sw-script-e04.txt} es un archivo se secuencias de strings separadas por espacios, donde el inicio y final de cada string comienza y termina con comillas dobles. Con lo anterior, las comillas del inicio y final de cada columna corresponden a marcadores para leer el contenido, y por lo tanto no son parte del contenido.
+}
+
+\begin{code}[H]
+    \lstinputlisting[style=javastyle, caption={Código utilizado en la implementación del mapper del selector de columna}, label={lst:001}]{code/code-001.java}
+\end{code}
+
+\begin{code}[H]
+    \lstinputlisting[style=javastyle, caption={Código utilizado en la implementación del reducer del selector de columna}, label={lst:002}]{code/code-002.java}
+\end{code}
+
+\subsection{Tiempo de ejecución}
+
+{\color{red} Utilizando el filtro desarrollado en el punto anterior, genere un archivo que sólo contenga el contenido de la columna 2 (los diálogos). Sobre este archivo, analice el tiempo que demora el proceso wordcount extendido. Realice el análisis con las primeras 1, 10, 100, 500 y 1000 entradas del archivo. Realice el experimento 5 veces para cada cantidad de entradas de modo de obtener una idea sobre la dispersión del tiempo de ejecución.
+
+    \begin{table}
+        \centering
+        \begin{tabular}{|c||c|c|c||c|c|c|}
+            \multicolumn{1}{c}{} & \multicolumn{3}{c}{Promedio[s]} & \multicolumn{3}{c}{Desviación[s]}                           \\
+            \hline
+            Entradas             & Real                            & User                              & Sys & Real & User & Sys \\
+            \hline
+            \hline
+            1                    &                                 &                                   &     &      &      &     \\
+            \hline
+            10                   &                                 &                                   &     &      &      &     \\
+            \hline
+            100                  &                                 &                                   &     &      &      &     \\
+            \hline
+            500                  &                                 &                                   &     &      &      &     \\
+            \hline
+            1000                 &                                 &                                   &     &      &      &     \\
+            \hline
+        \end{tabular}
+        \caption{Tiempos de ejecución de WordCount extendido}
+        \label{table:001}
+    \end{table}
+
+    Sobre estos resultados, discuta cual es el tiempo de overhead debido a la utilización de map-reduce para realizar los cálculos.
+}
+
+\section{Spark}
+
+\subsection{Uso de training-bigdata-002}
+
+{\color{red} Demuestre que ha logrado crear un cluster de spark, testear el cluster y destruir el cluster de acuerdo a las instrucciones entregadas en \url{https://github.com/ptoledo-teaching/training-bigdata-002}}
+
+\subsection{Escalamiento vertical y horizontal}
+
+{\color{red} Modificando el archivo de configuración de deployment del cluster de Spark, debe desplegar 5 configuraciones para medir el impacto que tienen el escalamiento vertical y horizonal en el tiempo de procesamiento. A cada estudiante le corresponderá una serie de configuraciones diferentes que se puede obtener de la siguiente lista:
+
+    \begin{itemize}
+        \item \textbf{19500967-8}: 2 x t3.large, 4 x t3.small, 8 x t3.large, 8 x t3.large, 8 x t3.small, 4 x t3.medium, 6 x t3.micro, 8 x t3.large, 2 x t3.micro, 4 x t3.medium
+        \item \textbf{20068377-3}: 6 x t3.micro, 6 x t3.micro, 2 x t3.micro, 6 x t3.large, 10 x t3.small, 2 x t3.micro, 2 x t3.large, 2 x t3.medium, 10 x t3.large, 2 x t3.micro
+        \item \textbf{20241011-1}: 4 x t3.micro, 10 x t3.micro, 8 x t3.micro, 4 x t3.large, 8 x t3.medium, 10 x t3.medium, 6 x t3.medium, 4 x t3.large, 4 x t3.medium, 6 x t3.medium
+        \item \textbf{20298815-6}: 2 x t3.small, 10 x t3.medium, 10 x t3.large, 8 x t3.medium, 6 x t3.small, 6 x t3.medium, 2 x t3.micro, 2 x t3.small, 6 x t3.small, 2 x t3.large
+        \item \textbf{20430363-0}: 4 x t3.micro, 4 x t3.small, 10 x t3.medium, 6 x t3.large, 8 x t3.medium, 10 x t3.micro, 4 x t3.small, 8 x t3.small, 10 x t3.large, 8 x t3.medium
+        \item \textbf{20632334-5}: 6 x t3.medium, 4 x t3.medium, 4 x t3.medium, 6 x t3.large, 8 x t3.micro, 6 x t3.small, 10 x t3.large, 10 x t3.large, 4 x t3.small, 2 x t3.micro
+        \item \textbf{20762701-1}: 8 x t3.micro, 2 x t3.medium, 6 x t3.micro, 10 x t3.small, 10 x t3.small, 10 x t3.medium, 4 x t3.large, 4 x t3.medium, 2 x t3.small, 2 x t3.large
+        \item \textbf{20781979-4}: 10 x t3.large, 6 x t3.medium, 6 x t3.large, 2 x t3.small, 10 x t3.small, 2 x t3.medium, 10 x t3.small, 4 x t3.small, 8 x t3.medium, 8 x t3.large
+        \item \textbf{20886083-6}: 2 x t3.large, 6 x t3.large, 4 x t3.micro, 8 x t3.micro, 4 x t3.large, 6 x t3.micro, 4 x t3.micro, 6 x t3.large, 6 x t3.large, 4 x t3.micro
+        \item \textbf{20920259-K}: 4 x t3.small, 8 x t3.micro, 2 x t3.large, 8 x t3.medium, 6 x t3.micro, 8 x t3.small, 8 x t3.large, 2 x t3.small, 10 x t3.large, 4 x t3.micro
+        \item \textbf{20966993-5}: 8 x t3.small, 6 x t3.small, 2 x t3.small, 10 x t3.large, 4 x t3.medium, 4 x t3.micro, 6 x t3.medium, 8 x t3.medium, 6 x t3.small, 8 x t3.micro
+        \item \textbf{20969314-3}: 4 x t3.large, 10 x t3.small, 8 x t3.micro, 4 x t3.large, 4 x t3.medium, 10 x t3.micro, 10 x t3.micro, 8 x t3.small, 8 x t3.large, 4 x t3.large
+        \item \textbf{21095788-K}: 4 x t3.micro, 4 x t3.small, 10 x t3.medium, 2 x t3.medium, 2 x t3.micro, 6 x t3.medium, 6 x t3.large, 10 x t3.small, 8 x t3.medium, 6 x t3.large
+        \item \textbf{21127094-2}: 4 x t3.large, 6 x t3.small, 2 x t3.large, 2 x t3.small, 8 x t3.small, 2 x t3.medium, 10 x t3.medium, 2 x t3.small, 8 x t3.small, 10 x t3.medium
+        \item \textbf{26799666-0}: 2 x t3.medium, 10 x t3.micro, 6 x t3.small, 2 x t3.medium, 10 x t3.micro, 2 x t3.medium, 6 x t3.small, 2 x t3.micro, 2 x t3.medium, 8 x t3.large
+    \end{itemize}
+
+    La cantidad de máquinas se refiere a la cantidad de máquinas trabajadoras. Usted debe desplegar el cluster para cada una de las configuraciones que le corresponden, ejecutar el test-000 (esto es necesario ya que este paso instala ciertas librerías que tienen un impacto relevante en el tiempo de ejecución) y luego medir el tiempo que demora el test-001. El tiempo debe ser reportado en \url{https://forms.gle/gGVc2wkqc6FzfyU99}. Debe completar el formulario para cada una de las 5 configuraciones solicitadas. En los casos de quienes tienen 2 veces asignada la misma configuración, se debe medir 2 veces y reportar 2 veces el tiempo requerido para ejecución.
+
+    Con la información obtenida se debe completar la tabla \ref{table:002}. En la columna de \textbf{costo} debe calcular el costo que tuvo la ejecución en USD tomando como referencia los precios on-demand por hora disponibles en \url{https://aws.amazon.com/ec2/instance-types/t3/}.
+
+    Los datos recopilados entre todos los estudiantes estarán disponibles en \url{https://docs.google.com/spreadsheets/d/1t53S2s0knpQnZl9EcZr2ZHWOg_qTCcNp6Kjpg7g1Wlo/edit?usp=sharing}. En base a esta información usted debe desarrollar una figura que permita apreciar el efecto multidimensional del escalamiento vertical y horizontal en el tiempo de ejecución del proceso. Debe considerar a lo menos 10 pares diferentes maquina/cantidad para poder desarrollar esta figura (deberá esperar a que exista esta cantidad mínima de información para poder proceder).
+}
+    \begin{table}
+        \centering
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            Maquinas & Tipo & Tiempo[s] & Costo[USD] \\
+            \hline
+            \hline
+                     &      &           &            \\
+            \hline
+                     &      &           &            \\
+            \hline
+        \end{tabular}
+        \caption{Tiempos de ejecución para medición de impacto de escalamiento}
+        \label{table:002}
+    \end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figure-000}
+    \caption{Efecto del escalamiento vertical y horizontal en el tiempo de ejecución de test-001.sh
+    {\color{red} Tiene libertad para elegir la metodología de visualización que le parezca más apropiada}}
+    \label{fig:001}
+\end{figure}
+
+{\color{red} Discuta sobre como afecta el escalamiento horizontal y vertical el tiempo de proceso del test-001, considerando tanto a la información que recopiló con sus experimentos, la información obtenida desde los experimentos de los otros participantes de la asignatura, y el impacto de la dispersión de las mediciones.}
+
+\section{Procesamiento de datos}
+
+\subsection{Extracción, transformación y carga}
+
+{\color{red} Desarrolle un programa basado en el test-001 que permita la extracción, transformación y carga (extraction, transformation and load, normalmente denominado ETL) del dataset de la asignatura. El set total de datos de la asignatura corresponde al archivo de 7.2[GB] disponible en \url{s3://utfsm-inf356-datasets/vlt_observations/vlt_observations.csv}. Este dataset ha sido dividido en 20 segmentos con nombre \url{s3://utfsm-inf356-datasets/vlt\_observations/vlt_observations_XXX.csv} para poder disponer de un acceso fraccionado a los datos.
+
+    El proceso ETL debe procesar el dataset entregado y generar un nuevo dataset para procesamiento posterior, el que debe considerar las siguientes columnas:
+    \begin{itemize}
+        \item Right ascension - grados
+        \item Right ascension - minutos
+        \item Right ascension - segundos
+        \item Declination - grados
+        \item Declination - minutos
+        \item Declination - segundos
+        \item Instrument
+        \item Exposition time
+        \item Template start (en tiempo unix)
+    \end{itemize}
+
+    El dataset procesado sólo debe tener los registros que corresponden a las observaciones con categoría  SCIENCE y tipo de observación OBJECT (referencia \url{https://archive.eso.org/eso/eso_archive_help.html}).
+
+    El resultado del dataset debe ser guardado en formato parquet en la raíz de su bucket de desarrollo bajo el nombre \textbf{vlt\_observations\_etl.parquet}. Se solicitará incluir el código bajo el nombre code-005.py en su entrega. Describa el procedimiento y muestre alguna métrica relativa a la ejecución y/o resultado de su procedimiento.}
+
+\begin{code}[H]
+    \lstinputlisting[style=pythonstyle, caption={Código utilizado para el procedimiento de ETL}, label={lst:005}]{code/code-005.py}
+\end{code}
+
+\subsection{Coordenadas galácticas}
+
+{\color{red} Desarrolle un programa que lea el archivo generado por el proceso ETL y genere un nuevo archivo parquet en el que se han transformado las coordenadas RA-DEC ecuatoriales de las observaciones a coordenadas galácticas. El nuevo archivo debe estar en la raíz de su bucket de desarrollo y debe ser llamado \textbf{vlt\_observations\_gc.parquet}. El archivo debe tener las columnas:
+    \begin{itemize}
+        \item Galactic right ascension (float en grados)
+        \item Galactic declination (float en grados)
+        \item Instrument
+        \item Exposition time
+        \item Template start (en tiempo unix)
+    \end{itemize}
+    Se solicitará incluir el código bajo el nombre code-006.py en su entrega. Describa el procedimiento y muestre alguna métrica relativa a la ejecución y/o resultado de su procedimiento.}
+
+\begin{code}[H]
+    \lstinputlisting[style=pythonstyle, caption={Código utilizado para el cálculo de coordenadas galácticas}, label={lst:006}]{code/code-006.py}
+\end{code}
+
+\subsection{Segmentación temporal}
+
+{\color{red} Segmente el archivo de coordenadas galácticas en tantos archivos como sea necesario de modo de contar con una agrupación por año y por semana del año. Se considera la primera semana del año la semana del primer lunes de un año. Los primeros días del año pertenecen al año anterior si ocurren antes del primer lunes del año.
+
+    Los datos deben ser guardados en formato parquet en una carpeta llamada \textbf{partition} en la raiz de su bucket de desarrollo. Dentro de partition las carpetas se separarán por año. Dentro de la carpeta de un determinado año deberá haber un archivo denominado \textbf{vlt\_observations\_XXXX.parquet} con todos los datos del año, y una carpeta denominada weeks, que dentro debe tener una serie de archivos denominados \textbf{vlt\_observations\_XXXX\_YY.parquet}, donde XXXX corresponde al año y YY al número de semana comenzando en 0.
+
+    Se solicitará incluir el código bajo el nombre code-007.py en su entrega. Describa el procedimiento y muestre alguna métrica relativa a la ejecución y/o resultado de su procedimiento.}
+
+\begin{code}[H]
+    \lstinputlisting[style=pythonstyle, caption={Código utilizado para segmentación temporal de datos}, label={lst:007}]{code/code-007.py}
+\end{code}
+
+\subsection{Conteo de observaciones}
+
+{\color{red} Desarrolle un programa que reciba un archivo parquet con el formato previamente utilizado para las coordenadas galácticas y que genere un conteo de las observaciones para cada segmento de 10 grados horizontal y vertical del cielo, segmentado por cada instrumento. El archivo de salida debe tener el mismo nombre que el archivo de entrada pero con un .count antes de la extensión .parquet. El conteo tiene que tener como coordenada de referencia el centro de la región angular. El tiempo de exposición debe ser reemplazado por el tiempo total de observaciones que han sido considerados en la cuenta. Se debe descartar la columna con el tiempo de inicio del template.
+
+    Se solicitará incluir el código bajo el nombre code-008.py en su entrega. Describa el procedimiento y muestre alguna métrica relativa a la ejecución y/o resultado de su procedimiento.}
+
+\begin{code}[H]
+    \lstinputlisting[style=pythonstyle, caption={Código utilizado para segmentación temporal de datos}, label={lst:007}]{code/code-008.py}
+\end{code}
+
+\end{document}

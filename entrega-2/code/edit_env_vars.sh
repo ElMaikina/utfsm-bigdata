@@ -1,1 +1,0 @@
-sudo vim /etc/environment

@@ -1,1 +1,0 @@
-ssh ubuntu@34.207.118.42 -i .\Documents\llave.pem

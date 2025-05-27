@@ -1,1 +1,0 @@
-tar czf hadoop-3.3.6.tar.gz hadoop-3.3.6

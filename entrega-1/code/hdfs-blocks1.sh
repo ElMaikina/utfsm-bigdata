@@ -1,1 +1,0 @@
-hdfs fsck / -files -blocks
