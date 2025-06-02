@@ -15,10 +15,10 @@
 \version{v1.0}
 
 % Estudiante
-\astudentname{Wedge}
-\astudentlastname{Antilles}
-\astudentrol{123456789-0}
-\astudentemail{wedge.antilles@rebelalliance.com}
+\astudentname{Miguel}
+\astudentlastname{Soto}
+\astudentrol{201973623-K}
+\astudentemail{miguel.sotod@sansano.usm.cl}
   
 \begin{document}
 
@@ -26,87 +26,120 @@
 % Borrar o comentar esta sección instrucciones antes de entregar %%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-{\color{red}
-\section*{Instrucciones}
-
-El presente documento corresponde a la plantilla para presentar las informaciones que deben ser proveídas para evaluar la entrega.
-
-Todos los textos en rojo a lo largo de la plantilla, junto con esta página de instrucciones, deben ser eliminadas antes de la compilación final.
-
-\newpage
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \section{Map Reduce}
 
- {\color{red} Una vez terminada esta sección puede destruir su cluster de Hadoop}
+\noindent
+Esta entrega consistia en modificar el codigo fuente de Hadoop para agregar funcionalidad extra, en donde habia que implementar metodos a partir de la funcion WordCount.
+
+\noindent
+Se pedia que crear una funcion que permitiese contar palabras previamente filtradas a partir de reglas indicadas en el informe.
+
+\noindent
+Luego, habia que crear otra funcion que permitiese extraer columnas de la salida de WordCount a partir del indice de la columna.
+
+\noindent
+Por motivos de eficiencia y por simplicidad, opte por parchar el codigo binario de Hadoop con las clases nuevas creadas a partir de WordCount en las funciones
+de ejemplo originales, de esta forma pude invocarlas facilmente y no tener que compilar el codigo fuente cada vez que hiciera un cambio en el codigo.
+
+\noindent
+Grabe un video explicativo mostrando el proceso en ejecucion junto a las salidas de ambos programas, ya que en el practico inicial fue recurrente el tema de que no
+dejar evidencia clara de los puntos que iba desarrollando. Aqui deje el {\color{blue}\href{https://www.youtube.com/watch?v=UVJUVDU4luk}{enlace}} al video en YouTube.
+
+\newpage
 
 \subsection{Implementación extendida de wordcounter}
 
-{\color{red} Utilizando el ejemplo WordCounter de Hadoop, implemente un programa que reciba un archivo y cuente las ocurrencias de cada palabra en ese texto. Debe considerar lo siguiente:
-    \begin{itemize}
-        \item Se considera palabra cualquier secuencia de carácteres separada por espacios
-        \item Una secuencia de carácteres especiales no corresponde a una palabra debe ser descartada
-        \item Se debe eliminar cualquier puntuación al inicio o final de la palabra, pero se debe conservar puntuaciones que estén entre carácteres
-        \item Las palabras se deben contar por su equivalente en letras minúsculas
-    \end{itemize}
-}
+\noindent
+Para desarrollar esta nueva funcionalidad me base en la implementacion de la clase original de WordCount, la cual obtuve desde el repositorio publico de Apache Hadoop
+en GitHub ({\color{blue}\href{https://github.com/apache/hadoop}{enlace}}), en donde dicha funcion se encuentra en la carpeta de ejemplos.
+
+\noindent
+La forma en la que luego parche el codigo, fue aprovechandome de los .jar que contiene el binario de Hadoop, estos ultimos son esencialmente
+archivos comprimidos que contienen los archivos .class de todas las clases .java de la fuente. Mas aun, el comando jar tiene la funcionalidad
+de actualizar un .jar con clases nuevas o con modificaciones de estas. Esto se puede lograr de la siguiente manera:
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{oracle-jar.PNG}
+    \caption{Documentacion oficial de Oracle sobre como parchar un JAR}
+    \label{hdfs.PNG}
+\end{figure}
+
+\noindent
+A continuacion dejare el codigo original de WordCount y el codigo de ExtendedWordCount, hecho a partir del anterior.
+
+\newpage
 
 \begin{code}[H]
-    \lstinputlisting[style=javastyle, caption={Código utilizado en la implementación del mapper el wordcounter extendido}, label={lst:003}]{code/code-003.java}
+    \lstinputlisting[style=javastyle, caption={Codigo original de WordCount}, label={lst:002}]{code/WordCount.java}
 \end{code}
 
+\newpage
+
 \begin{code}[H]
-    \lstinputlisting[style=javastyle, caption={Código utilizado en la implementación del reducer el wordcounter extendido}, label={lst:004}]{code/code-004.java}
+    \lstinputlisting[style=javastyle, caption={Codigo de ExtendedWordCount}, label={lst:002}]{code/ExtendedWordCount.java}
 \end{code}
+
+\newpage
 
 \subsection{Implementación de selector de columna}
 
-{\color{red} Utilizando el ejemplo WordCounter de Hadoop, implemente un map-reduce que acepte como parámetro un único número entero denominado \texttt{select\_column}. El map-reduce debe procesar un archivo con el formato \textbf{sw-script-e04.txt} y generar archivo que sólo contenga la columna indicada por el parámetro de entrada. Las columnas se cuentan desde 0. El número de columnas corresponde al registro que tenga la mayor cantidad de columnas. Si un registro no tiene valor para la columna indicada, se retorna un string vacío. Si el usuario indica cualquier número de columna fuera de los índices posibles, el archivo de salida debe ser igual al archivo original.
+De la misma manera que el punto anterior, me base en WordCount para crear el codigo para la clase SelectColumnExtractor, el cual permite sustraer
+una columna de la salida de WordCount en base al indice/numero de columna. Esta funcion en particular ejecuta WordCount si lo filtra al terminar
+el proceso de Map-Reduce.
 
-    Note que el archivo \textbf{sw-script-e04.txt} es un archivo se secuencias de strings separadas por espacios, donde el inicio y final de cada string comienza y termina con comillas dobles. Con lo anterior, las comillas del inicio y final de cada columna corresponden a marcadores para leer el contenido, y por lo tanto no son parte del contenido.
-}
-
-\begin{code}[H]
-    \lstinputlisting[style=javastyle, caption={Código utilizado en la implementación del mapper del selector de columna}, label={lst:001}]{code/code-001.java}
-\end{code}
+\newpage
 
 \begin{code}[H]
-    \lstinputlisting[style=javastyle, caption={Código utilizado en la implementación del reducer del selector de columna}, label={lst:002}]{code/code-002.java}
+    \lstinputlisting[style=javastyle, caption={Codigo de SelectColumnExtractor}, label={lst:002}]{code/SelectColumnExtractor.java}
 \end{code}
+
+\newpage
 
 \subsection{Tiempo de ejecución}
 
-{\color{red} Utilizando el filtro desarrollado en el punto anterior, genere un archivo que sólo contenga el contenido de la columna 2 (los diálogos). Sobre este archivo, analice el tiempo que demora el proceso wordcount extendido. Realice el análisis con las primeras 1, 10, 100, 500 y 1000 entradas del archivo. Realice el experimento 5 veces para cada cantidad de entradas de modo de obtener una idea sobre la dispersión del tiempo de ejecución.
+\noindent
+A continuación se muestran las medidas obtenidas utilizando el comando time en ExtendedWordCount:
 
-    \begin{table}
-        \centering
-        \begin{tabular}{|c||c|c|c||c|c|c|}
-            \multicolumn{1}{c}{} & \multicolumn{3}{c}{Promedio[s]} & \multicolumn{3}{c}{Desviación[s]}                           \\
-            \hline
-            Entradas             & Real                            & User                              & Sys & Real & User & Sys \\
-            \hline
-            \hline
-            1                    &                                 &                                   &     &      &      &     \\
-            \hline
-            10                   &                                 &                                   &     &      &      &     \\
-            \hline
-            100                  &                                 &                                   &     &      &      &     \\
-            \hline
-            500                  &                                 &                                   &     &      &      &     \\
-            \hline
-            1000                 &                                 &                                   &     &      &      &     \\
-            \hline
-        \end{tabular}
-        \caption{Tiempos de ejecución de WordCount extendido}
-        \label{table:001}
-    \end{table}
+\begin{table}[h!]
+\centering
+\begin{tabular}{lccc}
+\toprule
+\textbf{Archivo} & \textbf{real (s)} & \textbf{user (s)} & \textbf{sys (s)} \\
+\midrule
+sw-script-e04.txt  & 0m32.822s  & 0m7.653s & 0m0.388s
+\bottomrule
+\end{tabular}
+\caption{Tiempos de ejecución del WordCount extendido}
+\end{table}
 
-    Sobre estos resultados, discuta cual es el tiempo de overhead debido a la utilización de map-reduce para realizar los cálculos.
-}
+\noindent
+Luego se muestran las medidas obtenidas utilizando el comando time en SelectColumnExtractor:
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{lccc}
+\toprule
+\textbf{Archivo} & \textbf{real (s)} & \textbf{user (s)} & \textbf{sys (s)} \\
+\midrule
+sw-script-e04.txt  & 0m17.656s  & 0m7.137s & 0m0.350s
+\bottomrule
+\end{tabular}
+\caption{Tiempos de ejecución del SelectColumnExtractor}
+\end{table}
+
+\noindent
+Comparando ambos resultados, puedo concluir que:
+\begin{itemize}
+    \item El algoritmo de ExtendedWordCount es más intensivo en CPU, debido al preprocesamiento de texto, pero se mantiene eficiente gracias a la simplicidad del flujo MapReduce.
+    \item El SelectColumnExtractor es más ligero y orientado a E/S, siendo más rápido en archivos simples, pero ligeramente mas costoso si las líneas contienen muchas columnas.
+    \item Ambas soluciones escalan correctamente, pero el SelectColumnExtractor presenta tiempos de respuesta mas bajos en tareas estructuradas y simples.
+\end{itemize}
+
+\noindent
+Los resultados se pueden ver en tiempo real en el video indicado al inicio del practico ({\color{blue}\href{https://github.com/apache/hadoop}{enlace}}).
+
+\newpage
 
 \section{Spark}
 
