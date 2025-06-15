@@ -2,13 +2,13 @@ from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType, StructField, StringType
 from pyspark.sql.functions import col, split
 
-# Bucket personal (reemplaza con tu RUT sin puntos ni guion)
+# Bucket personal
 bucket = "204303630-inf356"
 
-# Iniciar sesión Spark
+# Iniciar Spark
 spark = SparkSession.builder.getOrCreate()
 
-# Esquema de datos
+# Formato de los datos
 schema = StructType([
     StructField("object", StringType(), True),
     StructField("right_ascension", StringType(), True),
@@ -44,23 +44,24 @@ schema = StructType([
     StructField("position", StringType(), True)
 ])
 
-# Leer y unir los 20 archivos
+# Lee y une los segmentos del archivo original
 df_list = []
 for i in range(20):
     filename = f"vlt_observations_{i:03}.csv"
     path = f"s3a://utfsm-inf356-datasets/vlt_observations/{filename}"
-    print(f"Loading: {filename}")
+    print(f"Trying to load data segment '{filename}'...")
     df = spark.read.csv(path, header=False, schema=schema)
+    print(f"Succesfully loaded data segment '{filename}'!")
     df_list.append(df)
 
 df_all = df_list[0]
 for df in df_list[1:]:
     df_all = df_all.union(df)
 
-# Filtrar solo observaciones válidas
+# Filtra en base a la categoria solicitada
 df_filtered = df_all.filter((col("category") == "SCIENCE") & (col("obs_type") == "OBJECT"))
 
-# Separar coordenadas RA y DEC
+# Separar coordenadas right ascension y declination
 df_split = df_filtered \
     .withColumn("ra_deg", split(col("right_ascension"), " ").getItem(0)) \
     .withColumn("ra_min", split(col("right_ascension"), " ").getItem(1)) \
@@ -71,20 +72,22 @@ df_split = df_filtered \
     .withColumn("template_start_unix", col("template_start").cast("long")) \
     .withColumn("exposition_time", col("exposition_time").cast("float"))
 
-# Seleccionar columnas finales
+# Selecciona solo las columnas utiles
 df_final = df_split.select(
     "ra_deg", "ra_min", "ra_sec",
     "dec_deg", "dec_min", "dec_sec",
     "instrument", "exposition_time", "template_start_unix"
 )
 
-# Guardar como Parquet
+# Guarda el dataframe como parquet
 output_path = f"s3a://{bucket}/vlt_observations_etl.parquet"
-print(f"Saving processed data to {output_path}")
+print(f"Attempting to save processed data to '{output_path}'...")
 df_final.write.mode("overwrite").parquet(output_path)
+print(f"Succesfully saved processed data to '{output_path}'!")
 
-# Métrica: filas procesadas
-print(f"Filas finales procesadas: {df_final.count()}")
+# Muestra las filas procesadas
+print(f"Final processed data: {df_final}")
+print(f"Final data length: {df_final.count()}")
 
-# Terminar sesión
+# Detiene Spark
 spark.stop()

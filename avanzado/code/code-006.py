@@ -1,18 +1,19 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, radians, degrees, cos, sin, atan2, asin
 
-# Create SparkSession
-spark = SparkSession.builder.getOrCreate()
-
 # Load parquet from previous ETL step
 bucket = "204303630-inf356"
+
+# Iniciar Spark
+spark = SparkSession.builder.getOrCreate()
+
+# Direccion de la entrada
 input_path = f"s3a://{bucket}/vlt_observations_etl.parquet"
+
+# Lee y guarda la entrada en un dataframe
 df = spark.read.parquet(input_path)
 
-# Convert RA/DEC from HMS/DMS to decimal degrees (float) if needed
-# Here we assume those columns are already floats in decimal degrees.
-
-# Convert to radians for trigonometric functions
+# Transforma los datos a radianes
 df = df.withColumn("ra_rad", radians(
     col("ra_deg") +
     col("ra_min") / 60 +
@@ -23,12 +24,12 @@ df = df.withColumn("ra_rad", radians(
     col("dec_sec") / 3600
 ))
 
-# Compute Cartesian coordinates
+# Calcula las coordenadas cartesianas
 df = df.withColumn("x_eq", cos(col("dec_rad")) * cos(col("ra_rad")))
 df = df.withColumn("y_eq", cos(col("dec_rad")) * sin(col("ra_rad")))
 df = df.withColumn("z_eq", sin(col("dec_rad")))
 
-# Apply rotation matrix from Equatorial (J2000) to Galactic coordinates
+# Calcula las coordenadas galacticas
 df = df.withColumn("x_gal", 
     -0.05487556 * col("x_eq") +
     -0.87343709 * col("y_eq") +
@@ -43,22 +44,26 @@ df = df.withColumn("x_gal",
      0.45598378 * col("z_eq")
 )
 
-# Convert back to spherical galactic coordinates (in degrees)
+# Devuelve las coordenadas a esfericas
 df = df.withColumn("gal_l", (degrees(atan2(col("y_gal"), col("x_gal"))) + 360) % 360)
 df = df.withColumn("gal_b", degrees(asin(col("z_gal"))))
 
-# Select required columns
+# Toma sola las columnas deseadas
 df_final = df.select(
-    col("gal_l").alias("Galactic right ascension"),
-    col("gal_b").alias("Galactic declination"),
+    col("gal_ra"),
+    col("gal_dec"),
     col("instrument"),
     col("exposition_time"),
     col("template_start_unix")
 )
 
-# Save result as Parquet
+# Guarda el dataframe como parquet
 output_path = f"s3a://{bucket}/vlt_observations_gc.parquet"
 df_final.write.mode("overwrite").parquet(output_path)
 
-# Stop Spark session
+# Muestra las filas procesadas
+print(f"Final processed data: {df_final}")
+print(f"Final data length: {df_final.count()}")
+
+# Detiene Spark
 spark.stop()
