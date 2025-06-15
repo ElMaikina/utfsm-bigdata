@@ -1,73 +1,68 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, unix_timestamp, from_unixtime, expr, weekofyear, year, to_timestamp, date_format, pandas_udf
-from pyspark.sql.types import IntegerType
-import pandas as pd
+from pyspark.sql.functions import (
+    col, from_unixtime, to_date, date_format, unix_timestamp, expr, floor, min
+)
+from pyspark.sql.window import Window
 
-import datetime
-import calendar
-
-# Inicializa Spark
+# Crear sesión Spark
 spark = SparkSession.builder.getOrCreate()
 
-# Configura bucket
+# Parámetros de entrada/salida
 bucket = "204303630-inf356"
 input_path = f"s3a://{bucket}/vlt_observations_gc.parquet"
-output_base = f"s3a://{bucket}/partition"
+output_root = f"s3a://{bucket}/partition"
 
-# Cargar dataset galáctico
+# Leer el archivo con coordenadas galácticas
 df = spark.read.parquet(input_path)
-print(f"Total registros cargados: {df.count()}")
 
-# Convertir 'template_start' de unix timestamp a fecha
-df = df.withColumn("ts", to_timestamp((col("template_start_unix").cast("long"))))
+# Convertir "Template start" (UNIX timestamp) a fecha
+df = df.withColumn("obs_date", to_date(from_unixtime(col("template_start_unix"))))
 
-# Función auxiliar para calcular "año semántico" y "semana semántica"
-def semantic_year_and_week(ts_str):
-    dt = datetime.datetime.strptime(ts_str, "%Y-%m-%d %H:%M:%S")
-    # Buscar primer lunes del año
-    jan_1 = datetime.datetime(dt.year, 1, 1)
-    first_monday = jan_1 + datetime.timedelta(days=(7 - jan_1.weekday()) % 7)
-    if dt < first_monday:
-        # Pertenecería al "año anterior"
-        year = dt.year - 1
-        jan_1_prev = datetime.datetime(year, 1, 1)
-        first_monday_prev = jan_1_prev + datetime.timedelta(days=(7 - jan_1_prev.weekday()) % 7)
-        week = (dt - first_monday_prev).days // 7
-    else:
-        year = dt.year
-        week = (dt - first_monday).days // 7
-    return (year, week)
+# Calcular primer lunes del año para cada año presente
+years_df = df.selectExpr("year(obs_date) as year").distinct()
+years_df = years_df.withColumn(
+    "first_lmonday",
+    expr("""
+        next_day(to_date(concat(year, '-01-01')), 'Monday')
+    """)
+)
 
-# Pandas UDF para mejor rendimiento
-@pandas_udf("struct<semantic_year:int,semantic_week:int>")
-def get_semantic_year_week(ts_series: pd.Series) -> pd.Series:
-    result = ts_series.dt.strftime("%Y-%m-%d %H:%M:%S").apply(semantic_year_and_week)
-    return pd.DataFrame(result.tolist(), columns=["semantic_year", "semantic_week"])
+# Asociar a cada fila su primer lunes del año correspondiente
+df = df.withColumn("year", expr("year(obs_date)"))
+df = df.join(years_df, on="year", how="left")
 
-# Aplicar función
-df = df.withColumn("ts_struct", get_semantic_year_week(col("ts")))
-df = df.withColumn("semantic_year", col("ts_struct.semantic_year"))
-df = df.withColumn("semantic_week", col("ts_struct.semantic_week")).drop("ts_struct")
+# Calcular semana desde el primer lunes (inicio de semana 0)
+df = df.withColumn(
+    "week",
+    floor(
+        (unix_timestamp(col("obs_date")) - unix_timestamp(col("first_lmonday")))
+        / (86400 * 7)
+    )
+)
 
-# Guardar por año
-years = df.select("semantic_year").distinct().collect()
-for row in years:
-    year = row["semantic_year"]
-    df_year = df.filter(col("semantic_year") == year)
-    
-    # Guardar archivo completo del año
-    path_year = f"{output_base}/{year}/vlt_observations_{year}.parquet"
-    df_year.write.mode("overwrite").parquet(path_year)
-    print(f"Año {year} - total registros: {df_year.count()}")
+# Reasignar a año anterior si la fecha es antes del primer lunes
+df = df.withColumn(
+    "adjusted_year",
+    expr("IF(obs_date < first_lmonday, year - 1, year)")
+).withColumn(
+    "adjusted_week",
+    expr("IF(obs_date < first_lmonday, 0, week)")
+)
 
-    # Guardar archivos semanales
-    weeks = df_year.select("semantic_week").distinct().collect()
-    for row_w in weeks:
-        week = row_w["semantic_week"]
-        df_week = df_year.filter(col("semantic_week") == week)
-        path_week = f"{output_base}/{year}/weeks/vlt_observations_{year}_{week:02d}.parquet"
-        df_week.write.mode("overwrite").parquet(path_week)
-        print(f"    Semana {week:02d} - registros: {df_week.count()}")
+# Escribir archivo por año (todos los datos de ese año)
+for year in df.select("adjusted_year").distinct().collect():
+    y = year["adjusted_year"]
+    df_year = df.filter(col("adjusted_year") == y).drop("first_lmonday", "year", "week")
+    df_year.write.mode("overwrite").parquet(f"{output_root}/{y}/vlt_observations_{y}.parquet")
 
-# Cerrar sesión Spark
+    # Subdividir por semana
+    df_weeks = df_year.withColumn("week", col("adjusted_week"))
+    for week in df_weeks.select("week").distinct().collect():
+        w = week["week"]
+        df_w = df_weeks.filter(col("week") == w)
+        df_w.write.mode("overwrite").parquet(
+            f"{output_root}/{y}/weeks/vlt_observations_{y}_{w}.parquet"
+        )
+
+# Finalizar sesión
 spark.stop()
