@@ -45,8 +45,8 @@ df = df.withColumn("x_gal",
 )
 
 # Devuelve las coordenadas a esfericas
-df = df.withColumn("gal_l", (degrees(atan2(col("y_gal"), col("x_gal"))) + 360) % 360)
-df = df.withColumn("gal_b", degrees(asin(col("z_gal"))))
+df = df.withColumn("gal_ra", (degrees(atan2(col("y_gal"), col("x_gal"))) + 360) % 360)
+df = df.withColumn("gal_dec", degrees(asin(col("z_gal"))))
 
 # Toma sola las columnas deseadas
 df_final = df.select(
