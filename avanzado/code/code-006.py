@@ -1,72 +1,64 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, udf
-from pyspark.sql.types import FloatType
-from astropy.coordinates import SkyCoord
-import astropy.units as u
+from pyspark.sql.functions import col, radians, degrees, cos, sin, atan2, asin
 
-# Iniciar Spark
+# Create SparkSession
 spark = SparkSession.builder.getOrCreate()
 
-# Reemplaza con tu número de estudiante sin puntos ni guión
+# Load parquet from previous ETL step
 bucket = "204303630-inf356"
 input_path = f"s3a://{bucket}/vlt_observations_etl.parquet"
-output_path = f"s3a://{bucket}/vlt_observations_gc.parquet"
-
-# Leer dataset procesado
 df = spark.read.parquet(input_path)
-print(f"Filas leídas: {df.count()}")
 
-# UDF para convertir coordenadas ecuatoriales a galácticas
-def equatorial_to_galactic(ra_deg, ra_min, ra_sec, dec_deg, dec_min, dec_sec):
-    try:
-        # Convertir a float
-        ra = float(ra_deg) + float(ra_min) / 60 + float(ra_sec) / 3600
-        dec_sign = -1 if str(dec_deg).strip().startswith('-') else 1
-        dec = abs(float(dec_deg)) + float(dec_min) / 60 + float(dec_sec) / 3600
-        dec *= dec_sign
-        coord = SkyCoord(ra=ra*u.degree, dec=dec*u.degree, frame='icrs')
-        return float(coord.galactic.l.degree), float(coord.galactic.b.degree)
-    except:
-        return None
+# Convert RA/DEC from HMS/DMS to decimal degrees (float) if needed
+# Here we assume those columns are already floats in decimal degrees.
 
-# Registrar UDF para coordenadas galácticas separadas
-@udf(FloatType())
-def ra_galactic_udf(ra_deg, ra_min, ra_sec, dec_deg, dec_min, dec_sec):
-    result = equatorial_to_galactic(ra_deg, ra_min, ra_sec, dec_deg, dec_min, dec_sec)
-    return result[0] if result else None
+# Convert to radians for trigonometric functions
+df = df.withColumn("ra_rad", radians(
+    col("Right ascension - grados") +
+    col("Right ascension - minutos") / 60 +
+    col("Right ascension - segundos") / 3600
+)).withColumn("dec_rad", radians(
+    col("Declination - grados") +
+    col("Declination - minutos") / 60 +
+    col("Declination - segundos") / 3600
+))
 
-@udf(FloatType())
-def dec_galactic_udf(ra_deg, ra_min, ra_sec, dec_deg, dec_min, dec_sec):
-    result = equatorial_to_galactic(ra_deg, ra_min, ra_sec, dec_deg, dec_min, dec_sec)
-    return result[1] if result else None
+# Compute Cartesian coordinates
+df = df.withColumn("x_eq", cos(col("dec_rad")) * cos(col("ra_rad")))
+df = df.withColumn("y_eq", cos(col("dec_rad")) * sin(col("ra_rad")))
+df = df.withColumn("z_eq", sin(col("dec_rad")))
 
-# Aplicar UDFs al DataFrame
-df_gc = df.withColumn("ra_galactic", ra_galactic_udf(
-        col("ra_deg"), col("ra_min"), col("ra_sec"),
-        col("dec_deg"), col("dec_min"), col("dec_sec")
-    )) \
-    .withColumn("dec_galactic", dec_galactic_udf(
-        col("ra_deg"), col("ra_min"), col("ra_sec"),
-        col("dec_deg"), col("dec_min"), col("dec_sec")
-    ))
-
-# Seleccionar columnas requeridas
-df_final = df_gc.select(
-    "ra_galactic",
-    "dec_galactic",
-    "instrument",
-    "exposition_time",
-    "template_start_unix"
+# Apply rotation matrix from Equatorial (J2000) to Galactic coordinates
+df = df.withColumn("x_gal", 
+    -0.05487556 * col("x_eq") +
+    -0.87343709 * col("y_eq") +
+    -0.48383502 * col("z_eq")
+).withColumn("y_gal", 
+     0.49410943 * col("x_eq") +
+    -0.44482963 * col("y_eq") +
+     0.74698225 * col("z_eq")
+).withColumn("z_gal", 
+    -0.86766615 * col("x_eq") +
+    -0.19807637 * col("y_eq") +
+     0.45598378 * col("z_eq")
 )
 
-# Eliminar filas con coordenadas inválidas
-df_final = df_final.na.drop()
+# Convert back to spherical galactic coordinates (in degrees)
+df = df.withColumn("gal_l", (degrees(atan2(col("y_gal"), col("x_gal"))) + 360) % 360)
+df = df.withColumn("gal_b", degrees(asin(col("z_gal"))))
 
-# Guardar resultado
+# Select required columns
+df_final = df.select(
+    col("gal_l").alias("Galactic right ascension"),
+    col("gal_b").alias("Galactic declination"),
+    col("Instrument"),
+    col("Exposition time"),
+    col("Template start")
+)
+
+# Save result as Parquet
+output_path = f"s3a://{bucket}/vlt_observations_gc.parquet"
 df_final.write.mode("overwrite").parquet(output_path)
 
-print(f"Archivo generado: {output_path}")
-print(f"Filas transformadas y guardadas: {df_final.count()}")
-
-# Cerrar Spark
+# Stop Spark session
 spark.stop()
