@@ -1,6 +1,8 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, unix_timestamp, from_unixtime, expr, weekofyear, year, to_timestamp, date_format
+from pyspark.sql.functions import col, unix_timestamp, from_unixtime, expr, weekofyear, year, to_timestamp, date_format, pandas_udf
 from pyspark.sql.types import IntegerType
+import pandas as pd
+
 import datetime
 import calendar
 
@@ -17,7 +19,7 @@ df = spark.read.parquet(input_path)
 print(f"Total registros cargados: {df.count()}")
 
 # Convertir 'template_start' de unix timestamp a fecha
-df = df.withColumn("ts", to_timestamp((col("template_start").cast("long"))))
+df = df.withColumn("ts", to_timestamp((col("template_start_unix").cast("long"))))
 
 # Función auxiliar para calcular "año semántico" y "semana semántica"
 def semantic_year_and_week(ts_str):
@@ -35,9 +37,6 @@ def semantic_year_and_week(ts_str):
         year = dt.year
         week = (dt - first_monday).days // 7
     return (year, week)
-
-from pyspark.sql.functions import pandas_udf
-import pandas as pd
 
 # Pandas UDF para mejor rendimiento
 @pandas_udf("struct<semantic_year:int,semantic_week:int>")
