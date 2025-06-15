@@ -14,13 +14,13 @@ df = spark.read.parquet(input_path)
 
 # Convert to radians for trigonometric functions
 df = df.withColumn("ra_rad", radians(
-    col("Right ascension - grados") +
-    col("Right ascension - minutos") / 60 +
-    col("Right ascension - segundos") / 3600
+    col("ra_deg") +
+    col("ra_min") / 60 +
+    col("ra_sec") / 3600
 )).withColumn("dec_rad", radians(
-    col("Declination - grados") +
-    col("Declination - minutos") / 60 +
-    col("Declination - segundos") / 3600
+    col("dec_deg") +
+    col("dec_min") / 60 +
+    col("dec_sec") / 3600
 ))
 
 # Compute Cartesian coordinates
@@ -51,9 +51,9 @@ df = df.withColumn("gal_b", degrees(asin(col("z_gal"))))
 df_final = df.select(
     col("gal_l").alias("Galactic right ascension"),
     col("gal_b").alias("Galactic declination"),
-    col("Instrument"),
-    col("Exposition time"),
-    col("Template start")
+    col("instrument"),
+    col("exposition_time"),
+    col("template_start_unix")
 )
 
 # Save result as Parquet
