@@ -143,63 +143,78 @@ Los resultados se pueden ver en tiempo real en el video indicado al inicio del p
 
 \section{Spark}
 
-\subsection{Uso de training-bigdata-002}
+A continuacion se describe detalladamente el desarrollo de la tarea práctica avanzada de Big Data, basada en el uso de \texttt{Flintrock} para la configuración de un clúster Spark en AWS. 
+A diferencia del informe original, este documento se enfoca en detallar todo el proceso personal, incluyendo errores cometidos, correcciones, decisiones de diseño, observaciones y comentarios 
+adicionales que pueden ser útiles para otros estudiantes que enfrenten una tarea similar. Se proporciona ademas un video explicativo mostrando evidencia de el levantamiento de el informe y otros
+detalles adicionales ({\color{blue}\href{https://www.youtube.com/watch?v=cp5aBbUCwiQ}{enlace}}).
 
-{\color{red} Demuestre que ha logrado crear un cluster de spark, testear el cluster y destruir el cluster de acuerdo a las instrucciones entregadas en \url{https://github.com/ptoledo-teaching/training-bigdata-002}}
+Para comenzar, se utilizó el mismo clúster que se trabajó en la entrega inicial. Se eliminó manualmente todos los nodos worker, manteniendo solamente el nodo master. Este paso fue esencial para asegurar una base limpia antes de implementar una nueva configuración.
+
+Se clonaron los siguientes repositorios proporcionados por el profesor:
+\begin{itemize}
+    \item \texttt{https://github.com/ptoledo-teaching/training-bigdata-002}
+    \item \texttt{https://github.com/nchammas/flintrock}
+\end{itemize}
+
+Estos repositorios contienen scripts clave para la creación del clúster. Se realizó una navegación rápida con \texttt{tree} y \texttt{vim} para entender su estructura y funcionalidades.
+
+El proceso de instalación incluyó los siguientes pasos:
+\begin{enumerate}
+    \item Instalación de \texttt{AWS CLI}.
+    \item Instalación de \texttt{pipx}.
+    \item Instalación de \texttt{Flintrock} mediante \texttt{pipx}.
+\end{enumerate}
+
+Durante este proceso, se descubrió que el script contenía una instrucción para crear un rol IAM para S3, pero el profesor indicó que esto no era necesario. Por ende, se omitió este paso aunque inicialmente se intentó (sin éxito, debido a permisos insuficientes).
+
+
+Se detectó un bug en la versión actual de Flintrock relacionado con incompatibilidades de Spark. Para solucionarlo, se aplicó un parche manualmente en el código fuente de Flintrock instalado. El procedimiento incluyó:
+\begin{itemize}
+    \item Edición directa de los archivos indicados por el profesor.
+    \item Verificación y corrección de problemas de indentación (uso de tabs vs. espacios).
+    \item Uso de expresiones regulares para reemplazo masivo.
+\end{itemize}
+
+\textbf{Nota:} Se olvidó hacer un respaldo del archivo original antes de modificar, lo que pudo haber provocado una reinstalación completa en caso de error.
+
+Se creó una nueva clave PEM con permisos adecuados y se renombró según el formato requerido por Flintrock. Inicialmente se cometió un error en los permisos, generando un \texttt{warning}. Posteriormente se corrigió con:
+
+\begin{lstlisting}[language=bash]
+chmod 400 clave.pem
+\end{lstlisting}
+
+Esto permitió una conexión exitosa al nodo master.
 
 \subsection{Escalamiento vertical y horizontal}
 
-{\color{red} Modificando el archivo de configuración de deployment del cluster de Spark, debe desplegar 5 configuraciones para medir el impacto que tienen el escalamiento vertical y horizonal en el tiempo de procesamiento. A cada estudiante le corresponderá una serie de configuraciones diferentes que se puede obtener de la siguiente lista:
+Se procedió a levantar múltiples configuraciones de clúster usando archivos \texttt{.yaml} modificados. Se observó que configuraciones con más de 8 nodos fallaban debido a restricciones de la cuenta de estudiante. Por lo tanto, se trabajó principalmente con configuraciones de hasta 6 nodos \texttt{t3.large}.
 
-    \begin{itemize}
-        \item \textbf{19500967-8}: 2 x t3.large, 4 x t3.small, 8 x t3.large, 8 x t3.large, 8 x t3.small, 4 x t3.medium, 6 x t3.micro, 8 x t3.large, 2 x t3.micro, 4 x t3.medium
-        \item \textbf{20068377-3}: 6 x t3.micro, 6 x t3.micro, 2 x t3.micro, 6 x t3.large, 10 x t3.small, 2 x t3.micro, 2 x t3.large, 2 x t3.medium, 10 x t3.large, 2 x t3.micro
-        \item \textbf{20241011-1}: 4 x t3.micro, 10 x t3.micro, 8 x t3.micro, 4 x t3.large, 8 x t3.medium, 10 x t3.medium, 6 x t3.medium, 4 x t3.large, 4 x t3.medium, 6 x t3.medium
-        \item \textbf{20298815-6}: 2 x t3.small, 10 x t3.medium, 10 x t3.large, 8 x t3.medium, 6 x t3.small, 6 x t3.medium, 2 x t3.micro, 2 x t3.small, 6 x t3.small, 2 x t3.large
-        \item \textbf{20430363-0}: 4 x t3.micro, 4 x t3.small, 10 x t3.medium, 6 x t3.large, 8 x t3.medium, 10 x t3.micro, 4 x t3.small, 8 x t3.small, 10 x t3.large, 8 x t3.medium
-        \item \textbf{20632334-5}: 6 x t3.medium, 4 x t3.medium, 4 x t3.medium, 6 x t3.large, 8 x t3.micro, 6 x t3.small, 10 x t3.large, 10 x t3.large, 4 x t3.small, 2 x t3.micro
-        \item \textbf{20762701-1}: 8 x t3.micro, 2 x t3.medium, 6 x t3.micro, 10 x t3.small, 10 x t3.small, 10 x t3.medium, 4 x t3.large, 4 x t3.medium, 2 x t3.small, 2 x t3.large
-        \item \textbf{20781979-4}: 10 x t3.large, 6 x t3.medium, 6 x t3.large, 2 x t3.small, 10 x t3.small, 2 x t3.medium, 10 x t3.small, 4 x t3.small, 8 x t3.medium, 8 x t3.large
-        \item \textbf{20886083-6}: 2 x t3.large, 6 x t3.large, 4 x t3.micro, 8 x t3.micro, 4 x t3.large, 6 x t3.micro, 4 x t3.micro, 6 x t3.large, 6 x t3.large, 4 x t3.micro
-        \item \textbf{20920259-K}: 4 x t3.small, 8 x t3.micro, 2 x t3.large, 8 x t3.medium, 6 x t3.micro, 8 x t3.small, 8 x t3.large, 2 x t3.small, 10 x t3.large, 4 x t3.micro
-        \item \textbf{20966993-5}: 8 x t3.small, 6 x t3.small, 2 x t3.small, 10 x t3.large, 4 x t3.medium, 4 x t3.micro, 6 x t3.medium, 8 x t3.medium, 6 x t3.small, 8 x t3.micro
-        \item \textbf{20969314-3}: 4 x t3.large, 10 x t3.small, 8 x t3.micro, 4 x t3.large, 4 x t3.medium, 10 x t3.micro, 10 x t3.micro, 8 x t3.small, 8 x t3.large, 4 x t3.large
-        \item \textbf{21095788-K}: 4 x t3.micro, 4 x t3.small, 10 x t3.medium, 2 x t3.medium, 2 x t3.micro, 6 x t3.medium, 6 x t3.large, 10 x t3.small, 8 x t3.medium, 6 x t3.large
-        \item \textbf{21127094-2}: 4 x t3.large, 6 x t3.small, 2 x t3.large, 2 x t3.small, 8 x t3.small, 2 x t3.medium, 10 x t3.medium, 2 x t3.small, 8 x t3.small, 10 x t3.medium
-        \item \textbf{26799666-0}: 2 x t3.medium, 10 x t3.micro, 6 x t3.small, 2 x t3.medium, 10 x t3.micro, 2 x t3.medium, 6 x t3.small, 2 x t3.micro, 2 x t3.medium, 8 x t3.large
-    \end{itemize}
+\begin{itemize}
+    \item Configuración con 10 \texttt{t3.medium} no logró levantar el clúster.
+    \item Ejecute el script \texttt{test-000.sh} en lugar de \texttt{test-001.sh}, generando inconsistencias en los benchmarks.
+\end{itemize}
 
-    La cantidad de máquinas se refiere a la cantidad de máquinas trabajadoras. Usted debe desplegar el cluster para cada una de las configuraciones que le corresponden, ejecutar el test-000 (esto es necesario ya que este paso instala ciertas librerías que tienen un impacto relevante en el tiempo de ejecución) y luego medir el tiempo que demora el test-001. El tiempo debe ser reportado en \url{https://forms.gle/gGVc2wkqc6FzfyU99}. Debe completar el formulario para cada una de las 5 configuraciones solicitadas. En los casos de quienes tienen 2 veces asignada la misma configuración, se debe medir 2 veces y reportar 2 veces el tiempo requerido para ejecución.
+\subsection*{Tiempos Registrados}
 
-    Con la información obtenida se debe completar la tabla \ref{table:002}. En la columna de \textbf{costo} debe calcular el costo que tuvo la ejecución en USD tomando como referencia los precios on-demand por hora disponibles en \url{https://aws.amazon.com/ec2/instance-types/t3/}.
+\begin{longtable}{|c|c|c|}
+\hline
+\textbf{Configuración} & \textbf{Test Ejecutado} & \textbf{Tiempo Aproximado} \\
+\hline
+4 \texttt{t3.large} & test-000.sh & 24 (real) \\
+\hline
+4 \texttt{t3.large} & test-000.sh & 24 (real) \\
+\hline
+4 \texttt{t3.small} & test-000.sh & 25 (real) \\
+\hline
+6 \texttt{t3.micro} & test-000.sh & 25 (real) \\
+\hline
+6 \texttt{t3.small} & test-000.sh & 26 (real) \\
+\hline
+10 \texttt{t3.medium} & test-000.sh & Falló (fallaba en launch.sh) \\
+\hline
+\end{longtable}
 
-    Los datos recopilados entre todos los estudiantes estarán disponibles en \url{https://docs.google.com/spreadsheets/d/1t53S2s0knpQnZl9EcZr2ZHWOg_qTCcNp6Kjpg7g1Wlo/edit?usp=sharing}. En base a esta información usted debe desarrollar una figura que permita apreciar el efecto multidimensional del escalamiento vertical y horizontal en el tiempo de ejecución del proceso. Debe considerar a lo menos 10 pares diferentes maquina/cantidad para poder desarrollar esta figura (deberá esperar a que exista esta cantidad mínima de información para poder proceder).
-}
-    \begin{table}
-        \centering
-        \begin{tabular}{|c|c|c|c|}
-            \hline
-            Maquinas & Tipo & Tiempo[s] & Costo[USD] \\
-            \hline
-            \hline
-                     &      &           &            \\
-            \hline
-                     &      &           &            \\
-            \hline
-        \end{tabular}
-        \caption{Tiempos de ejecución para medición de impacto de escalamiento}
-        \label{table:002}
-    \end{table}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figure-000}
-    \caption{Efecto del escalamiento vertical y horizontal en el tiempo de ejecución de test-001.sh
-    {\color{red} Tiene libertad para elegir la metodología de visualización que le parezca más apropiada}}
-    \label{fig:001}
-\end{figure}
-
-{\color{red} Discuta sobre como afecta el escalamiento horizontal y vertical el tiempo de proceso del test-001, considerando tanto a la información que recopiló con sus experimentos, la información obtenida desde los experimentos de los otros participantes de la asignatura, y el impacto de la dispersión de las mediciones.}
+\textit{Nota:} Los tiempos fueron medidos usando el comando \texttt{time bash test00.sh}, y registrados manualmente en un bloc de notas para su análisis posterior.
 
 \section{Procesamiento de datos}
 
