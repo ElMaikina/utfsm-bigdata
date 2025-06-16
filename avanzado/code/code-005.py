@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, split, udf, to_unixtime
+from pyspark.sql.functions import col, split, udf, to_unix_timestamp
 from pyspark.sql.types import StructType, StructField, StringType, LongType
 
 # Bucket personal
@@ -80,7 +80,7 @@ df_split = df_filtered \
     .withColumn("dec_deg", split(col("declination"), ":").getItem(0)) \
     .withColumn("dec_min", split(col("declination"), ":").getItem(1)) \
     .withColumn("dec_sec", split(col("declination"), ":").getItem(2)) \
-    .withColumn("template_start_unix", to_unixtime(col("template_start"))) \
+    .withColumn("template_start_unix", to_unix_timestamp(col("template_start"))) \
     .withColumn("exposition_time", col("exposition_time").cast("float"))
 
 # Selecciona solo las columnas utiles
