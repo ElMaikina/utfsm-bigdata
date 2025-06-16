@@ -108,12 +108,12 @@ df_split = df_split \
 
 # Borra todas las filas con valores nulos
 df_split.na.drop(how='any')
-df_all = df_all.where(col("year").isNotNull())
-df_all = df_all.where(col("month").isNotNull())
-df_all = df_all.where(col("day").isNotNull())
-df_all = df_all.where(col("hours").isNotNull())
-df_all = df_all.where(col("minutes").isNotNull())
-df_all = df_all.where(col("seconds").isNotNull())
+df_split = df_split.where(col("year").isNotNull())
+df_split = df_split.where(col("month").isNotNull())
+df_split = df_split.where(col("day").isNotNull())
+df_split = df_split.where(col("hours").isNotNull())
+df_split = df_split.where(col("minutes").isNotNull())
+df_split = df_split.where(col("seconds").isNotNull())
 
 # Muestra el dataframe hasta este punto para depurar
 print(f"Mostrando los datos con meses, dias, horas, etc. separados:")
