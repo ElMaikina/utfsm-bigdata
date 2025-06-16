@@ -1,6 +1,8 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType, StructField, StringType
 from pyspark.sql.functions import col, split
+import datetime
+import time
 
 # Bucket personal
 bucket = "204303630-inf356"
@@ -60,6 +62,9 @@ for i in range(20):
 df_all = df_list[0]
 for df in df_list[1:]:
     df_all = df_all.union(df)
+
+# Muestra los datos iniciales
+df_all.show(n=20)
 
 # Filtra en base a la categoria solicitada
 df_filtered = df_all.filter((col("category") == "SCIENCE") & (col("obs_type") == "OBJECT"))
