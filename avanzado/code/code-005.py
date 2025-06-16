@@ -150,7 +150,8 @@ df_split = df_split.withColumn("template_start_unix", df_manual_unix_time(col("y
 df_final = df_split.select(
     "ra_deg", "ra_min", "ra_sec",
     "dec_deg", "dec_min", "dec_sec",
-    "instrument", "exposition_time", "template_start_unix"
+    "instrument", "exposition_time", 
+    "template_start_unix"
 )
 
 # Guarda el dataframe como parquet
