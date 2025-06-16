@@ -1,0 +1,1 @@
+submit.sh ~/scripts/code-007.py > ~/scripts/result-007.log

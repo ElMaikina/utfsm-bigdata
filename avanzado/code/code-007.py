@@ -63,7 +63,8 @@ for year in df.select("adjusted_year").distinct().collect():
     y = year["adjusted_year"]
     df_year = df.filter(col("adjusted_year") == y).drop("first_lmonday", "year", "week")
     df_year.write.mode("overwrite").parquet(f"{output_root}/{y}/vlt_observations_{y}.parquet")
-    print(f"Final processed data for each year: {df_year}")
+    print(f"Final processed data for each year:")
+    df_year.show(n=20)
 
     # Subdivide por semana
     df_weeks = df_year.withColumn("week", col("adjusted_week"))
@@ -73,7 +74,8 @@ for year in df.select("adjusted_year").distinct().collect():
         df_w.write.mode("overwrite").parquet(
             f"{output_root}/{y}/weeks/vlt_observations_{y}_{w}.parquet"
         )
-        print(f"Final processed data for each week: {df_w}")
+        print(f"Final processed data for each week:")
+        df_w.show(n=20)
 
 # Detiene Spark
 spark.stop()

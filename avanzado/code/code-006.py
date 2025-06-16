@@ -62,8 +62,10 @@ output_path = f"s3a://{bucket}/vlt_observations_gc.parquet"
 df_final.write.mode("overwrite").parquet(output_path)
 
 # Muestra las filas procesadas
-print(f"Final processed data: {df_final}")
-print(f"Final data length: {df_final.count()}")
+print(f"Final processed rows: {df_final}")
+print(f"Final rows extracted: {df_final.count()}")
+print(f"Final processed data:")
+df_final.show(n=20)
 
 # Detiene Spark
 spark.stop()

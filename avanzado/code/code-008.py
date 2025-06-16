@@ -40,5 +40,11 @@ df_grouped = df_grouped.withColumnRenamed("ra_bin", "gal_ra") \
 df_grouped.write.mode("overwrite").parquet(output_path)
 print(f"Archivo guardado en: {output_path}")
 
+# Muestra las filas procesadas
+print(f"Final processed rows: {df_grouped}")
+print(f"Final rows extracted: {df_grouped.count()}")
+print(f"Final processed data:")
+df_grouped.show(n=20)
+
 # Detener Spark
 spark.stop()

@@ -86,8 +86,10 @@ df_final.write.mode("overwrite").parquet(output_path)
 print(f"Succesfully saved processed data to '{output_path}'!")
 
 # Muestra las filas procesadas
-print(f"Final processed data: {df_final}")
-print(f"Final data length: {df_final.count()}")
+print(f"Final processed rows: {df_final}")
+print(f"Final rows extracted: {df_final.count()}")
+print(f"Final processed data:")
+df_final.show(n=20)
 
 # Detiene Spark
 spark.stop()

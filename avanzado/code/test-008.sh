@@ -1,0 +1,1 @@
+submit.sh ~/scripts/code-008.py > ~/scripts/result-008.log
