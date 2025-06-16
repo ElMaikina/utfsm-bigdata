@@ -79,8 +79,8 @@ df_split = df_filtered \
     .withColumn("dec_deg", split(col("declination"), ":").getItem(0)) \
     .withColumn("dec_min", split(col("declination"), ":").getItem(1)) \
     .withColumn("dec_sec", split(col("declination"), ":").getItem(2)) \
-    .withColumn("date", split(col("template_start"), "T").getItem(0)) \
-    .withColumn("time", split(col("template_start"), "T").getItem(1)) \
+    .withColumn("date", split(col("template_start"), "[T]").getItem(0)) \
+    .withColumn("time", split(col("template_start"), "[T]").getItem(1)) \
     .withColumn("exposition_time", col("exposition_time").cast("float"))
 
 # Muestra el dataframe hasta este punto para depurar
@@ -89,9 +89,9 @@ df_split.show(n=20)
 
 # Separa las fechas en meses, dias, horas, etc.
 df_split = df_split \
-    .withColumn("year", split(col("date"), "-").getItem(0)) \
-    .withColumn("month", split(col("date"), "-").getItem(1)) \
-    .withColumn("day", split(col("date"), "-").getItem(2)) \
+    .withColumn("year", split(col("date"), "\-").getItem(0)) \
+    .withColumn("month", split(col("date"), "\-").getItem(1)) \
+    .withColumn("day", split(col("date"), "\-").getItem(2)) \
     .withColumn("hours", split(col("time"), ":").getItem(0)) \
     .withColumn("minutes", split(col("time"), ":").getItem(1)) \
     .withColumn("seconds", split(col("time"), ":").getItem(2)) \
