@@ -1,6 +1,6 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType, StructField, StringType
-from pyspark.sql.functions import col, split
+from pyspark.sql.functions import col, split, unix_timestamp
 import datetime
 import time
 
@@ -77,7 +77,7 @@ df_split = df_filtered \
     .withColumn("dec_deg", split(col("declination"), ":").getItem(0)) \
     .withColumn("dec_min", split(col("declination"), ":").getItem(1)) \
     .withColumn("dec_sec", split(col("declination"), ":").getItem(2)) \
-    .withColumn("template_start_unix", int(datetime.strptime(col("template_start_unix"), "%Y-%m-%dT%H:%M:%S").timestamp())) \
+    .withColumn("template_start_unix", unix_timestamp(col("template_start"))) \
     .withColumn("exposition_time", col("exposition_time").cast("float"))
 
 # Selecciona solo las columnas utiles
