@@ -67,6 +67,7 @@ df_all.show(n=20)
 
 # Borra todas las filas con valores nulos
 df_all.na.drop(how='any')
+df_all = df_all.where(col("template_start").isNotNull())
 
 # Filtra en base a la categoria solicitada
 df_filtered = df_all.filter((col("category") == "SCIENCE") & (col("obs_type") == "OBJECT"))
