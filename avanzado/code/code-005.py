@@ -90,9 +90,9 @@ df_split.show(n=20)
 
 # Separa las fechas en meses, dias, horas, etc.
 df_split = df_split \
-    .withColumn("year", split(col("date"), "\-").getItem(0)) \
-    .withColumn("month", split(col("date"), "\-").getItem(1)) \
-    .withColumn("day", split(col("date"), "\-").getItem(2)) \
+    .withColumn("year", split(col("date"), "-").getItem(0)) \
+    .withColumn("month", split(col("date"), "-").getItem(1)) \
+    .withColumn("day", split(col("date"), "-").getItem(2)) \
     .withColumn("hours", split(col("time"), ":").getItem(0)) \
     .withColumn("minutes", split(col("time"), ":").getItem(1)) \
     .withColumn("seconds", split(col("time"), ":").getItem(2)) \
@@ -100,17 +100,23 @@ df_split = df_split \
 # Convierte las fechas en enteros para manipular despues
 df_split = df_split \
     .withColumn("year", col("year").cast("int")) \
-    .withColumn("month", col("year").cast("int")) \
-    .withColumn("day", col("year").cast("int")) \
-    .withColumn("hours", col("year").cast("int")) \
-    .withColumn("minutes", col("year").cast("int")) \
-    .withColumn("seconds", col("year").cast("int")) \
+    .withColumn("month", col("month").cast("int")) \
+    .withColumn("day", col("day").cast("int")) \
+    .withColumn("hours", col("hours").cast("int")) \
+    .withColumn("minutes", col("minutes").cast("int")) \
+    .withColumn("seconds", col("seconds").cast("int")) \
 
 # Borra todas las filas con valores nulos
 df_split.na.drop(how='any')
+df_all = df_all.where(col("year").isNotNull())
+df_all = df_all.where(col("month").isNotNull())
+df_all = df_all.where(col("day").isNotNull())
+df_all = df_all.where(col("hours").isNotNull())
+df_all = df_all.where(col("minutes").isNotNull())
+df_all = df_all.where(col("seconds").isNotNull())
 
 # Muestra el dataframe hasta este punto para depurar
-print(f"Mostrando los datos con fecha separada:")
+print(f"Mostrando los datos con meses, dias, horas, etc. separados:")
 df_split.show(n=20)
 
 # Funcion lambda que determina si un ano es bisiesto
