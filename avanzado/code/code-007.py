@@ -58,17 +58,24 @@ df = df.withColumn(
 )
 print(f"Adding days before the first monday to the year before: {df}")
 
+# Toma una muestra de los anos para acelerar el proceso
+df = df.sample(fraction=0.25, seed=3)
+
 # Escribir archivo anuales
 for year in df.select("adjusted_year").distinct().collect():
     y = year["adjusted_year"]
     df_year = df.filter(col("adjusted_year") == y).drop("first_lmonday", "year", "week")
     df_year.write.mode("overwrite").parquet(f"{output_root}/{y}/vlt_observations_{y}.parquet")
     
-    # Subdivide por semana
+    # Subdivide por semana para agrupar anualmente
     df_weeks = df_year.withColumn("week", col("adjusted_week"))
-    for week in df_weeks.select("week").distinct().collect():
+
+    # Toma una muestra de las semanas para acelerar el proceso
+    df_sample = df_weeks.sample(fraction=0.25, seed=3)
+
+    for week in df_sample.select("week").distinct().collect():
         w = week["week"]
-        df_w = df_weeks.filter(col("week") == w)
+        df_w = df_sample.filter(col("week") == w)
         df_w.write.mode("overwrite").parquet(
             f"{output_root}/{y}/weeks/vlt_observations_{y}_{w}.parquet"
         )
