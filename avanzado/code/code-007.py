@@ -17,7 +17,7 @@ spark = SparkSession.builder.getOrCreate()
 # Lee el archivo con coordenadas galácticas
 df = spark.read.parquet(input_path)
 
-# Conveierte la fecha unix a fecha date
+# Convierte la fecha unix a fecha date
 df = df.withColumn("obs_date", to_date(from_unixtime(col("template_start_unix"))))
 
 # Calcula el primer lunes anual
@@ -63,9 +63,7 @@ for year in df.select("adjusted_year").distinct().collect():
     y = year["adjusted_year"]
     df_year = df.filter(col("adjusted_year") == y).drop("first_lmonday", "year", "week")
     df_year.write.mode("overwrite").parquet(f"{output_root}/{y}/vlt_observations_{y}.parquet")
-    print(f"Final processed data for each year:")
-    df_year.show(n=20)
-
+    
     # Subdivide por semana
     df_weeks = df_year.withColumn("week", col("adjusted_week"))
     for week in df_weeks.select("week").distinct().collect():
@@ -74,7 +72,7 @@ for year in df.select("adjusted_year").distinct().collect():
         df_w.write.mode("overwrite").parquet(
             f"{output_root}/{y}/weeks/vlt_observations_{y}_{w}.parquet"
         )
-        print(f"Final processed data for each week:")
+        print(f"Final processed data for week {w} of the year {y}:")
         df_w.show(n=20)
 
 # Detiene Spark
