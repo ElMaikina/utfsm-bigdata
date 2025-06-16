@@ -62,7 +62,11 @@ for df in df_list[1:]:
     df_all = df_all.union(df)
 
 # Muestra los datos iniciales
+print(f"Mostrando los datos iniciales:")
 df_all.show(n=20)
+
+# Borra todas las filas con valores nulos
+df_all.na.drop(how='any')
 
 # Filtra en base a la categoria solicitada
 df_filtered = df_all.filter((col("category") == "SCIENCE") & (col("obs_type") == "OBJECT"))
@@ -81,18 +85,28 @@ df_split = df_filtered \
 
 # Separa las fechas en meses, dias, horas, etc.
 df_split = df_split \
-    .withColumn("year", split(col("date"), "-").getItem(0).cast("long")) \
-    .withColumn("month", split(col("date"), "-").getItem(1).cast("long")) \
-    .withColumn("day", split(col("date"), "-").getItem(2).cast("long")) \
-    .withColumn("hours", split(col("time"), ":").getItem(0).cast("long")) \
-    .withColumn("minutes", split(col("time"), ":").getItem(1).cast("long")) \
-    .withColumn("seconds", split(col("time"), ":").getItem(2).cast("long")) \
+    .withColumn("year", split(col("date"), "-").getItem(0)) \
+    .withColumn("month", split(col("date"), "-").getItem(1)) \
+    .withColumn("day", split(col("date"), "-").getItem(2)) \
+    .withColumn("hours", split(col("time"), ":").getItem(0)) \
+    .withColumn("minutes", split(col("time"), ":").getItem(1)) \
+    .withColumn("seconds", split(col("time"), ":").getItem(2)) \
 
-# Muestra el dataframe hasta este punto para depurar
-df_split.show(n=20)
+# Convierte las fechas en enteros para manipular despues
+df_split = df_split \
+    .withColumn("year", col("year").cast("int")) \
+    .withColumn("month", col("year").cast("int")) \
+    .withColumn("day", col("year").cast("int")) \
+    .withColumn("hours", col("year").cast("int")) \
+    .withColumn("minutes", col("year").cast("int")) \
+    .withColumn("seconds", col("year").cast("int")) \
 
 # Borra todas las filas con valores nulos
 df_split.na.drop(how='any')
+
+# Muestra el dataframe hasta este punto para depurar
+print(f"Mostrando los datos con la fecha:")
+df_split.show(n=20)
 
 # Funcion lambda que determina si un ano es bisiesto
 leap = lambda y: int((y % 4 == 0 and y % 100 != 0) or (y % 400 == 0))
