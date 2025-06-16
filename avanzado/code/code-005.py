@@ -77,7 +77,7 @@ df_split = df_filtered \
     .withColumn("dec_deg", split(col("declination"), ":").getItem(0)) \
     .withColumn("dec_min", split(col("declination"), ":").getItem(1)) \
     .withColumn("dec_sec", split(col("declination"), ":").getItem(2)) \
-    .withColumn("template_start_unix", col("template_start").cast("long")) \
+    .withColumn("template_start_unix", int(datetime.strptime(col("template_start_unix"), "%Y-%m-%dT%H:%M:%S").timestamp())) \
     .withColumn("exposition_time", col("exposition_time").cast("float"))
 
 # Selecciona solo las columnas utiles
