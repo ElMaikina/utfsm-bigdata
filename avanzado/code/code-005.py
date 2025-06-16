@@ -1,6 +1,6 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, split, udf, to_unix_timestamp
-from pyspark.sql.types import StructType, StructField, StringType, LongType
+from pyspark.sql.functions import col, split, to_unix_timestamp
+from pyspark.sql.types import StructType, StructField, StringType
 
 # Bucket personal
 bucket = "204303630-inf356"
