@@ -5,6 +5,9 @@ from pyspark.sql.functions import col, split
 # Bucket personal
 bucket = "204303630-inf356"
 
+# Direccion de salida
+output_path = f"s3a://{bucket}/vlt_observations_etl.parquet"
+
 # Iniciar Spark
 spark = SparkSession.builder.getOrCreate()
 
@@ -63,12 +66,12 @@ df_filtered = df_all.filter((col("category") == "SCIENCE") & (col("obs_type") ==
 
 # Separar coordenadas right ascension y declination
 df_split = df_filtered \
-    .withColumn("ra_deg", split(col("right_ascension"), " ").getItem(0)) \
-    .withColumn("ra_min", split(col("right_ascension"), " ").getItem(1)) \
-    .withColumn("ra_sec", split(col("right_ascension"), " ").getItem(2)) \
-    .withColumn("dec_deg", split(col("declination"), " ").getItem(0)) \
-    .withColumn("dec_min", split(col("declination"), " ").getItem(1)) \
-    .withColumn("dec_sec", split(col("declination"), " ").getItem(2)) \
+    .withColumn("ra_deg", split(col("right_ascension"), ":").getItem(0)) \
+    .withColumn("ra_min", split(col("right_ascension"), ":").getItem(1)) \
+    .withColumn("ra_sec", split(col("right_ascension"), ":").getItem(2)) \
+    .withColumn("dec_deg", split(col("declination"), ":").getItem(0)) \
+    .withColumn("dec_min", split(col("declination"), ":").getItem(1)) \
+    .withColumn("dec_sec", split(col("declination"), ":").getItem(2)) \
     .withColumn("template_start_unix", col("template_start").cast("long")) \
     .withColumn("exposition_time", col("exposition_time").cast("float"))
 
@@ -80,7 +83,6 @@ df_final = df_split.select(
 )
 
 # Guarda el dataframe como parquet
-output_path = f"s3a://{bucket}/vlt_observations_etl.parquet"
 print(f"Attempting to save processed data to '{output_path}'...")
 df_final.write.mode("overwrite").parquet(output_path)
 print(f"Succesfully saved processed data to '{output_path}'!")

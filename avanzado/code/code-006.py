@@ -1,14 +1,18 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, radians, degrees, cos, sin, atan2, asin
 
-# Load parquet from previous ETL step
+
+# Bucket personal
 bucket = "204303630-inf356"
+
+# Direccion de entrada
+input_path = f"s3a://{bucket}/vlt_observations_etl.parquet"
+
+# Direccion de salida
+output_path = f"s3a://{bucket}/vlt_observations_gc.parquet"
 
 # Iniciar Spark
 spark = SparkSession.builder.getOrCreate()
-
-# Direccion de la entrada
-input_path = f"s3a://{bucket}/vlt_observations_etl.parquet"
 
 # Lee y guarda la entrada en un dataframe
 df = spark.read.parquet(input_path)
@@ -58,7 +62,6 @@ df_final = df.select(
 )
 
 # Guarda el dataframe como parquet
-output_path = f"s3a://{bucket}/vlt_observations_gc.parquet"
 df_final.write.mode("overwrite").parquet(output_path)
 
 # Muestra las filas procesadas

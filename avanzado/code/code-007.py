@@ -5,14 +5,14 @@ from pyspark.sql.window import Window
 # Bucket personal
 bucket = "204303630-inf356"
 
-# Iniciar Spark
-spark = SparkSession.builder.getOrCreate()
-
-# Direccion de la entrada
+# Direccion de entrada
 input_path = f"s3a://{bucket}/vlt_observations_gc.parquet"
 
 # Direccion de la salida
 output_root = f"s3a://{bucket}/partition"
+
+# Iniciar Spark
+spark = SparkSession.builder.getOrCreate()
 
 # Lee el archivo con coordenadas galácticas
 df = spark.read.parquet(input_path)
