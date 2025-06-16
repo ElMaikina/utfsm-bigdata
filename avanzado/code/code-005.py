@@ -64,9 +64,6 @@ for df in df_list[1:]:
 # Muestra los datos iniciales
 df_all.show(n=20)
 
-# Borra todas las filas con valores nulos
-df_all.na.drop()
-
 # Filtra en base a la categoria solicitada
 df_filtered = df_all.filter((col("category") == "SCIENCE") & (col("obs_type") == "OBJECT"))
 
@@ -90,6 +87,12 @@ df_split = df_split \
     .withColumn("hours", split(col("time"), ":").getItem(0).cast("long")) \
     .withColumn("minutes", split(col("time"), ":").getItem(1).cast("long")) \
     .withColumn("seconds", split(col("time"), ":").getItem(2).cast("long")) \
+
+# Muestra el dataframe hasta este punto para depurar
+df_split.show(n=20)
+
+# Borra todas las filas con valores nulos
+df_split.na.drop(how='any')
 
 # Funcion lambda que determina si un ano es bisiesto
 leap = lambda y: int((y % 4 == 0 and y % 100 != 0) or (y % 400 == 0))
