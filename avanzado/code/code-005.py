@@ -69,6 +69,9 @@ df_all.show(n=20)
 df_all.na.drop(how='any')
 df_all = df_all.where(col("template_start").isNotNull())
 
+# Toma una muestra de los anos para acelerar el proceso
+df_all = df_all.sample(fraction=0.25, seed=3)
+
 # Filtra en base a la categoria solicitada
 df_filtered = df_all.filter((col("category") == "SCIENCE") & (col("obs_type") == "OBJECT"))
 
@@ -90,6 +93,9 @@ df_final = df_split.select(
     "instrument", "exposition_time", 
     "template_start_unix"
 )
+
+# Elimina los registros sin fecha
+df_final = df_final.where(col("template_start_unix").isNotNull())
 
 # Guarda el dataframe como parquet
 print(f"Attempting to save processed data to '{output_path}'...")

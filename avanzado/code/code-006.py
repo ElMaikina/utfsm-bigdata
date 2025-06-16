@@ -17,6 +17,9 @@ spark = SparkSession.builder.getOrCreate()
 # Lee y guarda la entrada en un dataframe
 df = spark.read.parquet(input_path)
 
+# Toma una muestra de los anos para acelerar el proceso
+df = df.sample(fraction=0.25, seed=3)
+
 # Transforma los datos a radianes
 df = df.withColumn("ra_rad", radians(
     col("ra_deg") +
