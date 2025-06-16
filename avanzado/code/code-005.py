@@ -83,6 +83,10 @@ df_split = df_filtered \
     .withColumn("time", split(col("template_start"), "T").getItem(1)) \
     .withColumn("exposition_time", col("exposition_time").cast("float"))
 
+# Muestra el dataframe hasta este punto para depurar
+print(f"Mostrando los datos con fecha y hora:")
+df_split.show(n=20)
+
 # Separa las fechas en meses, dias, horas, etc.
 df_split = df_split \
     .withColumn("year", split(col("date"), "-").getItem(0)) \
@@ -105,7 +109,7 @@ df_split = df_split \
 df_split.na.drop(how='any')
 
 # Muestra el dataframe hasta este punto para depurar
-print(f"Mostrando los datos con la fecha:")
+print(f"Mostrando los datos con fecha separada:")
 df_split.show(n=20)
 
 # Funcion lambda que determina si un ano es bisiesto
