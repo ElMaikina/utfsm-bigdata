@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, split, unix_timestamp
+from pyspark.sql.functions import col, split, unix_timestamp, regexp_replace
 from pyspark.sql.types import StructType, StructField, StringType
 
 # Bucket personal
@@ -67,13 +67,18 @@ df_all.show(n=20)
 
 # Borra todas las filas con valores nulos
 df_all.na.drop(how='any')
-df_all = df_all.where(col("template_start").isNotNull())
 
 # Toma una muestra de los anos para acelerar el proceso
 df_all = df_all.sample(fraction=0.25, seed=3)
 
+# Quita las filas con valores nulos
+df_all = df_all.where(col("template_start").isNotNull())
+
 # Filtra en base a la categoria solicitada
 df_filtered = df_all.filter((col("category") == "SCIENCE") & (col("obs_type") == "OBJECT"))
+
+# Arregla el formato del time stamp que usa el dataframe original
+df_filtered = df_filtered.withColumn("template_start", regexp_replace("template_start", r"T", " "))
 
 # Separar coordenadas right ascension y declination
 df_split = df_filtered \
