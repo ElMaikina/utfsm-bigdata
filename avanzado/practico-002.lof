@@ -1,2 +1,10 @@
 \babel@toc {spanish}{}\relax 
 \contentsline {figure}{\numberline {1}{\ignorespaces Documentacion oficial de Oracle sobre como parchar un JAR}}{5}{figure.caption.5}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Neofetch en el nodo master del cluster de Spark}}{14}{figure.caption.12}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Spark procesando los datos de esta seccion con el codigo al lado}}{14}{figure.caption.13}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Dataframe incial y resultante tras procesar los datos}}{14}{figure.caption.14}%
+\contentsline {figure}{\numberline {5}{\ignorespaces Dataframe resultante tras procesar los datos}}{15}{figure.caption.15}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Spark procesando los datos mientras explico el codigo}}{19}{figure.caption.19}%
+\contentsline {figure}{\numberline {7}{\ignorespaces Dataframe resultante tras procesar los datos}}{19}{figure.caption.20}%
+\contentsline {figure}{\numberline {8}{\ignorespaces Pantallazo del Bucket S3 resultante tras procesar los datos}}{22}{figure.caption.23}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Dataframe resultante tras procesar los datos}}{25}{figure.caption.26}%

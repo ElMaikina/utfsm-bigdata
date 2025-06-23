@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.22)  9 JUN 2025 13:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.21)  23 JUN 2025 08:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -533,6 +533,18 @@ LaTeX Warning: Label `lst:002' multiply defined.
 LaTeX Warning: Label `lst:002' multiply defined.
 
 
+LaTeX Warning: Label `lst:005' multiply defined.
+
+
+LaTeX Warning: Label `lst:005' multiply defined.
+
+
+LaTeX Warning: Label `lst:006' multiply defined.
+
+
+LaTeX Warning: Label `lst:007' multiply defined.
+
+
 LaTeX Warning: Label `lst:007' multiply defined.
 
 )
@@ -670,13 +682,13 @@ LaTeX Info: Redefining \% on input line 1.
 (practico-002.lof
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
-)
+
+
+[2])
 \tf@lof=\write6
 \openout6 = `practico-002.lof'.
 
- (practico-002.lol
-
-[2])
+ (practico-002.lol)
 \tf@lol=\write7
 \openout7 = `practico-002.lol'.
 
@@ -685,7 +697,7 @@ LaTeX Info: Redefining \% on input line 1.
 [3]
 
 [4]
-<figures/oracle-jar.PNG, id=106, 710.655pt x 462.97969pt>
+<figures/oracle-jar.PNG, id=130, 710.655pt x 462.97969pt>
 File: figures/oracle-jar.PNG Graphic file (type png)
 <use figures/oracle-jar.PNG>
 Package pdftex.def Info: figures/oracle-jar.PNG  used on input line 63.
@@ -768,25 +780,95 @@ Underfull \vbox (badness 1331) has occurred while \output is active []
 
 
 
-[12] (C:\Program Files\MiKTeX\tex/latex/listings\lstlang1.sty
+[12]
+
+[13]
+<figures/31-figura-0.PNG, id=453, 812.28468pt x 505.89pt>
+File: figures/31-figura-0.PNG Graphic file (type png)
+<use figures/31-figura-0.PNG>
+Package pdftex.def Info: figures/31-figura-0.PNG  used on input line 243.
+(pdftex.def)             Requested size: 228.42972pt x 142.26378pt.
+<figures/31-figura-1.PNG, id=454, 1445.4pt x 813.0375pt>
+File: figures/31-figura-1.PNG Graphic file (type png)
+<use figures/31-figura-1.PNG>
+Package pdftex.def Info: figures/31-figura-1.PNG  used on input line 249.
+(pdftex.def)             Requested size: 252.90468pt x 142.26378pt.
+<figures/31-figura-2.PNG, id=455, 1445.4pt x 813.0375pt>
+File: figures/31-figura-2.PNG Graphic file (type png)
+<use figures/31-figura-2.PNG>
+Package pdftex.def Info: figures/31-figura-2.PNG  used on input line 255.
+(pdftex.def)             Requested size: 252.90468pt x 142.26378pt.
+
+
+[14 <./figures/31-figura-0.PNG> <./figures/31-figura-1.PNG> <./figures/31-figur
+a-2.PNG>]
+<figures/31-figura-final.PNG, id=461, 1427.3325pt x 614.295pt>
+File: figures/31-figura-final.PNG Graphic file (type png)
+<use figures/31-figura-final.PNG>
+Package pdftex.def Info: figures/31-figura-final.PNG  used on input line 263.
+(pdftex.def)             Requested size: 330.54462pt x 142.26378pt.
+
+
+[15 <./figures/31-figura-final.PNG>]
+(C:\Program Files\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
-(code/code-005.py)
+(code/code-005-cut-1.py)
 
-[13] (code/code-006.py)
+[16] (code/code-005-cut-2.py)
 
-[14]
-Overfull \hbox (59.30545pt too wide) in paragraph at lines 266--267
-\T1/Crlt-LF/m/n/12 weeks, que den-tro de-be te-ner una se-rie de ar-chi-vos de-
-no-mi-na-dos \T1/Crlt-LF/b/n/12 vlt_observations_XXXX_YY.parquet\T1/Crlt-LF/m/n
-/12 ,
+[17] (code/code-005-cut-3.py)
+
+[18]
+Overfull \hbox (49.639pt too wide) in paragraph at lines 287--288
+\T1/Crlt-LF/m/n/12 par-tir del ar-chi-vo ge-ne-ra-do en el pro-ce-so ETL. Se ca
+r-gó el ar-chi-vo \T1/cmtt/m/n/12 vlt_observations_etl.parquet\T1/Crlt-LF/m/n/1
+2 ,
  []
 
-(code/code-007.py) (code/code-008.py)
+<figures/32-figura-1.PNG, id=584, 1445.4pt x 813.0375pt>
+File: figures/32-figura-1.PNG Graphic file (type png)
+<use figures/32-figura-1.PNG>
+Package pdftex.def Info: figures/32-figura-1.PNG  used on input line 297.
+(pdftex.def)             Requested size: 252.90468pt x 142.26378pt.
+<figures/32-figura-final.PNG, id=585, 1043.39813pt x 546.54187pt>
+File: figures/32-figura-final.PNG Graphic file (type png)
+<use figures/32-figura-final.PNG>
+Package pdftex.def Info: figures/32-figura-final.PNG  used on input line 303.
+(pdftex.def)             Requested size: 271.59554pt x 142.26378pt.
 
-[15]
 
-[16] (practico-002.aux
+[19 <./figures/32-figura-1.PNG> <./figures/32-figura-final.PNG>]
+(code/code-006-cut-1.py)
+
+[20] (code/code-006-cut-2.py)
+
+[21]
+<figures/33-figura-final.PNG, id=667, 1000.48781pt x 532.23843pt>
+File: figures/33-figura-final.PNG Graphic file (type png)
+<use figures/33-figura-final.PNG>
+Package pdftex.def Info: figures/33-figura-final.PNG  used on input line 338.
+(pdftex.def)             Requested size: 267.41794pt x 142.26378pt.
+
+
+[22 <./figures/33-figura-final.PNG>] (code/code-007-cut-1.py)
+
+[23] (code/code-007-cut-2.py)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+[24]
+<figures/34-figura-final.PNG, id=752, 1187.93813pt x 648.17157pt>
+File: figures/34-figura-final.PNG Graphic file (type png)
+<use figures/34-figura-final.PNG>
+Package pdftex.def Info: figures/34-figura-final.PNG  used on input line 364.
+(pdftex.def)             Requested size: 260.7309pt x 142.26378pt.
+
+
+[25 <./figures/34-figura-final.PNG>] (code/code-008.py)
+
+[26] (practico-002.aux
 LaTeX Info: Redefining \. on input line 11.
 LaTeX Info: Redefining \% on input line 11.
 )
@@ -802,10 +884,10 @@ Package rerunfilecheck Info: File `practico-002.out' has not changed.
 (rerunfilecheck)             Checksum: B4AA1F7BF5BA2BF96682DB65CE833AF8;2004.
  ) 
 Here is how much of TeX's memory you used:
- 17352 strings out of 469958
- 277717 string characters out of 5479868
- 1870817 words of memory out of 5000000
- 43502 multiletter control sequences out of 15000+600000
+ 17800 strings out of 469958
+ 285497 string characters out of 5479868
+ 1867920 words of memory out of 5000000
+ 43668 multiletter control sequences out of 15000+600000
  738995 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  80i,12n,97p,1084b,1752s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -814,10 +896,12 @@ ectt1095.pk> <C:\Users\ElMaikina\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/
 ec/dpi600\ectt1200.pk><C:/Users/ElMaikina/AppData/Roaming/MiKTeX/fonts/type1/go
 ogle/carlito/Crlt-Bold.pfb><C:/Users/ElMaikina/AppData/Roaming/MiKTeX/fonts/typ
 e1/google/carlito/Crlt-Italic.pfb><C:/Users/ElMaikina/AppData/Roaming/MiKTeX/fo
-nts/type1/google/carlito/Crlt-Regular.pfb>
-Output written on practico-002.pdf (16 pages, 305893 bytes).
+nts/type1/google/carlito/Crlt-Regular.pfb><C:/Program Files/MiKTeX/fonts/type1/
+public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfo
+nts/cm/cmsy10.pfb>
+Output written on practico-002.pdf (26 pages, 6891340 bytes).
 PDF statistics:
- 649 PDF objects out of 1000 (max. 8388607)
- 350 named destinations out of 1000 (max. 500000)
- 99 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1094 PDF objects out of 1200 (max. 8388607)
+ 620 named destinations out of 1000 (max. 500000)
+ 139 words of extra memory for PDF output out of 10000 (max. 10000000)
 

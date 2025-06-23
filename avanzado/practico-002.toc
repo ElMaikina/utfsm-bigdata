@@ -7,6 +7,6 @@
 \contentsline {subsection}{\numberline {2.1}Escalamiento vertical y horizontal}{12}{subsection.2.1}%
 \contentsline {section}{\numberline {3}Procesamiento de datos}{13}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Extracción, transformación y carga}{13}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Coordenadas galácticas}{14}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Segmentación temporal}{15}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}Conteo de observaciones}{15}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.2}Coordenadas galácticas}{19}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Segmentación temporal}{22}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Conteo de observaciones}{25}{subsection.3.4}%

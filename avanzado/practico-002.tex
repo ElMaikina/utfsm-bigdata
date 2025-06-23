@@ -218,67 +218,158 @@ Se procedió a levantar múltiples configuraciones de clúster usando archivos \
 
 \section{Procesamiento de datos}
 
+Al igual que en las entregas anteriores del practico avanzado, el desarrollo fue desarrollado en vivo y se adjunta un video de la demostracion de este a traves de un enlace al video en YouTube ({\color{blue}\href{https://www.youtube.com/watch?v=GdrpnyFULTI}{enlace}}).
+
+En las revisiones de las entregas anteriores se indico que no puse evidencia suficiente, lo cual me sorprendio ya que me di el tiempo de hacer los videos explicitamente porque en la entrega incial fue recurrente el tema de la poca documentacion.
+
+Me gusta creer que quien corrigio mis tareas no vio el link que adjunte y por ende voy a dejar en cada seccion el enlace a la parte especifica del video en donde se muestra el funcionamiento de mi codigo.
+
 \subsection{Extracción, transformación y carga}
 
-{\color{red} Desarrolle un programa basado en el test-001 que permita la extracción, transformación y carga (extraction, transformation and load, normalmente denominado ETL) del dataset de la asignatura. El set total de datos de la asignatura corresponde al archivo de 7.2[GB] disponible en \url{s3://utfsm-inf356-datasets/vlt_observations/vlt_observations.csv}. Este dataset ha sido dividido en 20 segmentos con nombre \url{s3://utfsm-inf356-datasets/vlt\_observations/vlt_observations_XXX.csv} para poder disponer de un acceso fraccionado a los datos.
+Durante el desarrollo del proceso ETL, se utilizó un clúster Spark configurado con seis máquinas tipo \texttt{t3.large} en AWS. Se gestionó todo el código mediante un repositorio GitHub, el cual fue clonado en el nodo \texttt{master} del clúster para facilitar la edición y sincronización.
 
-    El proceso ETL debe procesar el dataset entregado y generar un nuevo dataset para procesamiento posterior, el que debe considerar las siguientes columnas:
-    \begin{itemize}
-        \item Right ascension - grados
-        \item Right ascension - minutos
-        \item Right ascension - segundos
-        \item Declination - grados
-        \item Declination - minutos
-        \item Declination - segundos
-        \item Instrument
-        \item Exposition time
-        \item Template start (en tiempo unix)
-    \end{itemize}
+El procedimiento se organizó en scripts numerados (por ejemplo, \texttt{code-005.py}), con scripts de ejecución asociados (por ejemplo, \texttt{test-005.sh}). Para comenzar, se eliminaron los datos anteriores del bucket S3 estudiantil para asegurar un entorno limpio.
 
-    El dataset procesado sólo debe tener los registros que corresponden a las observaciones con categoría  SCIENCE y tipo de observación OBJECT (referencia \url{https://archive.eso.org/eso/eso_archive_help.html}).
+El código leyó las 20 porciones del dataset desde el bucket público, aplicando el esquema correspondiente, uniendo todos los fragmentos en un único \texttt{DataFrame}. Se eliminaron filas con valores nulos y se tomó una muestra del 1\% de los datos para pruebas. Luego, se filtraron las observaciones con \texttt{category = SCIENCE} y \texttt{obs\_type = OBJECT}.
 
-    El resultado del dataset debe ser guardado en formato parquet en la raíz de su bucket de desarrollo bajo el nombre \textbf{vlt\_observations\_etl.parquet}. Se solicitará incluir el código bajo el nombre code-005.py en su entrega. Describa el procedimiento y muestre alguna métrica relativa a la ejecución y/o resultado de su procedimiento.}
+El campo \texttt{template\_start} fue procesado para eliminar la letra \texttt{T} y poder convertirlo a formato Unix. Las coordenadas ecuatoriales se dividieron en grados, minutos y segundos, y se almacenó la información en formato \texttt{Parquet} en el bucket del estudiante bajo el nombre \texttt{vlt\_observations\_etl.parquet}.
+
+\newpage
+
+Evidencia del desarrollo a modo de images y enlace a la seccion del video con la demostracion ({\color{blue}\href{https://youtu.be/GdrpnyFULTI?si=b5H6Qznky7ijbZmJ&t=177}{enlace}}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=5cm]{31-figura-0.PNG}
+    \caption{Neofetch en el nodo master del cluster de Spark}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=5cm]{31-figura-1.PNG}
+    \caption{Spark procesando los datos de esta seccion con el codigo al lado}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=5cm]{31-figura-2.PNG}
+    \caption{Dataframe incial y resultante tras procesar los datos}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=5cm]{31-figura-final.PNG}
+    \caption{Dataframe resultante tras procesar los datos}
+\end{figure}
+
+\newpage
 
 \begin{code}[H]
-    \lstinputlisting[style=pythonstyle, caption={Código utilizado para el procedimiento de ETL}, label={lst:005}]{code/code-005.py}
+    \lstinputlisting[style=pythonstyle, caption={Código utilizado para el procedimiento de ETL}, label={lst:005}]{code/code-005-cut-1.py}
 \end{code}
+
+\newpage
+
+\begin{code}[H]
+    \lstinputlisting[style=pythonstyle, caption={Código utilizado para el procedimiento de ETL}, label={lst:005}]{code/code-005-cut-2.py}
+\end{code}
+\newpage
+\begin{code}[H]
+    \lstinputlisting[style=pythonstyle, caption={Código utilizado para el procedimiento de ETL}, label={lst:005}]{code/code-005-cut-3.py}
+\end{code}
+
+\newpage
 
 \subsection{Coordenadas galácticas}
 
-{\color{red} Desarrolle un programa que lea el archivo generado por el proceso ETL y genere un nuevo archivo parquet en el que se han transformado las coordenadas RA-DEC ecuatoriales de las observaciones a coordenadas galácticas. El nuevo archivo debe estar en la raíz de su bucket de desarrollo y debe ser llamado \textbf{vlt\_observations\_gc.parquet}. El archivo debe tener las columnas:
-    \begin{itemize}
-        \item Galactic right ascension (float en grados)
-        \item Galactic declination (float en grados)
-        \item Instrument
-        \item Exposition time
-        \item Template start (en tiempo unix)
-    \end{itemize}
-    Se solicitará incluir el código bajo el nombre code-006.py en su entrega. Describa el procedimiento y muestre alguna métrica relativa a la ejecución y/o resultado de su procedimiento.}
+Se desarrolló un programa que transforma las coordenadas ecuatoriales en galácticas a partir del archivo generado en el proceso ETL. Se cargó el archivo \texttt{vlt\_observations\_etl.parquet}, tomando una muestra del 25\% para agilizar el desarrollo.
 
+Se convirtieron las coordenadas de grados, minutos y segundos a grados decimales utilizando cálculos trigonométricos básicos. Luego, se realizaron las transformaciones necesarias para obtener la ascensión recta y declinación galáctica, las cuales fueron almacenadas junto con los campos \texttt{instrument}, \texttt{exposition\_time} y \texttt{template\_start}.
+
+El resultado se guardó en el archivo \texttt{vlt\_observations\_gc.parquet}.
+
+Evidencia del desarrollo a modo de images y enlace a la seccion del video con la demostracion ({\color{blue}\href{https://youtu.be/GdrpnyFULTI?si=cb-NDtVoNadNSFb7&t=466}{enlace}}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=5cm]{32-figura-1.PNG}
+    \caption{Spark procesando los datos mientras explico el codigo}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=5cm]{32-figura-final.PNG}
+    \caption{Dataframe resultante tras procesar los datos}
+\end{figure}
+
+\newpage
 \begin{code}[H]
-    \lstinputlisting[style=pythonstyle, caption={Código utilizado para el cálculo de coordenadas galácticas}, label={lst:006}]{code/code-006.py}
+    \lstinputlisting[style=pythonstyle, caption={Código utilizado para el cálculo de coordenadas galácticas}, label={lst:006}]{code/code-006-cut-1.py}
 \end{code}
+\newpage
+\begin{code}[H]
+    \lstinputlisting[style=pythonstyle, caption={Código utilizado para el cálculo de coordenadas galácticas}, label={lst:006}]{code/code-006-cut-2.py}
+\end{code}
+\newpage
 
 \subsection{Segmentación temporal}
 
-{\color{red} Segmente el archivo de coordenadas galácticas en tantos archivos como sea necesario de modo de contar con una agrupación por año y por semana del año. Se considera la primera semana del año la semana del primer lunes de un año. Los primeros días del año pertenecen al año anterior si ocurren antes del primer lunes del año.
+A partir del archivo con coordenadas galácticas, se segmentaron los datos por año y por semana del año, considerando como primera semana la que contiene el primer lunes. Las fechas anteriores a ese lunes fueron asociadas al año anterior.
 
-    Los datos deben ser guardados en formato parquet en una carpeta llamada \textbf{partition} en la raiz de su bucket de desarrollo. Dentro de partition las carpetas se separarán por año. Dentro de la carpeta de un determinado año deberá haber un archivo denominado \textbf{vlt\_observations\_XXXX.parquet} con todos los datos del año, y una carpeta denominada weeks, que dentro debe tener una serie de archivos denominados \textbf{vlt\_observations\_XXXX\_YY.parquet}, donde XXXX corresponde al año y YY al número de semana comenzando en 0.
+Se transformó la fecha desde formato Unix a calendario, se identificaron los años distintos y el primer lunes correspondiente para cada uno. Luego, se asignaron las observaciones a su semana correspondiente y se ajustó el año cuando era necesario.
 
-    Se solicitará incluir el código bajo el nombre code-007.py en su entrega. Describa el procedimiento y muestre alguna métrica relativa a la ejecución y/o resultado de su procedimiento.}
+Finalmente, los datos fueron almacenados en formato \texttt{Parquet} dentro del directorio \texttt{partition/}, organizados por carpeta de año. Cada año contiene un archivo con todos sus datos (\texttt{vlt\_observations\_XXXX.parquet}) y una subcarpeta \texttt{weeks/} con archivos semanales por año.
+
+Es importante recalcar que justamente al ejecutar este codigo, AWS se colapso y me echo del cluster de Spark, e inclusi en el video se muestra como no se alcanzo a procesar toda la data.
+
+Ya que este procedimiento era bastante largo, decidir revisar el bucket para ver si proceso algo de los datos entregados, los nodos alcanzaron a agrupar solo las semanas del 2018, sin embargo se podia
+ver que se cumplia el formato pedido de las fechas y numeracion de semanas, por lo que decidi dejarlo hasta ahi y seguir con el punto siguiente.
+
+\begin{itemize}
+  \item Ejecucion y mi explicacion del codigo: {\color{blue}\href{https://youtu.be/GdrpnyFULTI?si=vEHhc2fKoWvcQzTY&t=547}{enlace}}.
+  \item Momento en donde AWS me echa del entorno: {\color{blue}\href{https://youtu.be/GdrpnyFULTI?si=wfYQl2w1CQLTAboK&t=686}{enlace}}.
+  \item Evidencia de que los datos se guardaron: {\color{blue}\href{https://youtu.be/GdrpnyFULTI?si=1imVLcvU_TyfZjSQ&t=940}{enlace}}.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=5cm]{33-figura-final.PNG}
+    \caption{Pantallazo del Bucket S3 resultante tras procesar los datos}
+\end{figure}
+
+\newpage
 
 \begin{code}[H]
-    \lstinputlisting[style=pythonstyle, caption={Código utilizado para segmentación temporal de datos}, label={lst:007}]{code/code-007.py}
+    \lstinputlisting[style=pythonstyle, caption={Código utilizado para segmentación temporal de datos}, label={lst:007}]{code/code-007-cut-1.py}
+\end{code}
+
+\newpage
+
+\begin{code}[H]
+    \lstinputlisting[style=pythonstyle, caption={Código utilizado para segmentación temporal de datos}, label={lst:007}]{code/code-007-cut-2.py}
 \end{code}
 
 \subsection{Conteo de observaciones}
 
-{\color{red} Desarrolle un programa que reciba un archivo parquet con el formato previamente utilizado para las coordenadas galácticas y que genere un conteo de las observaciones para cada segmento de 10 grados horizontal y vertical del cielo, segmentado por cada instrumento. El archivo de salida debe tener el mismo nombre que el archivo de entrada pero con un .count antes de la extensión .parquet. El conteo tiene que tener como coordenada de referencia el centro de la región angular. El tiempo de exposición debe ser reemplazado por el tiempo total de observaciones que han sido considerados en la cuenta. Se debe descartar la columna con el tiempo de inicio del template.
+El último paso fue generar un conteo de observaciones agrupadas por instrumento y por bloques de 10 grados del cielo tanto horizontal como verticalmente. A partir del archivo con coordenadas galácticas, se agruparon los datos según el centro de cada celda angular de 10x10 grados.
 
-    Se solicitará incluir el código bajo el nombre code-008.py en su entrega. Describa el procedimiento y muestre alguna métrica relativa a la ejecución y/o resultado de su procedimiento.}
+En cada celda, se sumó el tiempo total de exposición en lugar de mantener los valores individuales, y se descartó el campo \texttt{template\_start}. El archivo de salida se guardó con el mismo nombre que el archivo de entrada, pero agregando \texttt{.count} antes de la extensión.
+
+Evidencia del desarrollo a modo de images y enlace a la seccion del video con la demostracion ({\color{blue}\href{https://youtu.be/GdrpnyFULTI?si=if9d7dEC7Wyjnwij&t=1303}{enlace}}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=5cm]{34-figura-final.PNG}
+    \caption{Dataframe resultante tras procesar los datos}
+\end{figure}
+
+\newpage
 
 \begin{code}[H]
     \lstinputlisting[style=pythonstyle, caption={Código utilizado para segmentación temporal de datos}, label={lst:007}]{code/code-008.py}
 \end{code}
+\newpage
 
 \end{document}
