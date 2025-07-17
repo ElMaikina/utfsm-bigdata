@@ -69,7 +69,7 @@ df_all.show(n=20)
 df_all.na.drop(how='any')
 
 # Toma una muestra de los anos para acelerar el proceso
-df_all = df_all.sample(fraction=0.25, seed=3)
+df_all = df_all.sample(fraction=0.01, seed=3)
 
 # Quita las filas con valores nulos
 df_all = df_all.where(col("template_start").isNotNull())
